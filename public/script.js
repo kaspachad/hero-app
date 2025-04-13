@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize timeline animation
     initTimelineAnimation();
     
-    // Initialize countries tooltip
-    initCountriesTooltip();
+    // Initialize tooltips (replaces initCountriesTooltip)
+    initTooltips();
     
     // Fetch initial stats
     fetchStats();
@@ -93,60 +93,93 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
     }
     
-    // Enhanced tooltip functionality
-function initCountriesTooltip() {
-    // Update the selector to match your current HTML structure
-    const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
-    if (countriesCounter) {
-        // Change from mouseenter/mouseleave to click
-        countriesCounter.addEventListener('click', showCountriesTooltip);
-        
-        // Remove the mouseleave handler
-        // countriesCounter.removeEventListener('mouseleave', hideCountriesTooltip);
-    }
-    
-    // Add click handler to document to close tooltip when clicking outside
-    document.addEventListener('click', function(e) {
-        const tooltip = document.querySelector('.countries-tooltip');
-        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
-        
-        // If tooltip is visible and click is outside tooltip and outside the counter
-        if (tooltip && 
-            tooltip.style.display === 'block' && 
-            !tooltip.contains(e.target) && 
-            !countriesCounter.contains(e.target)) {
-            hideCountriesTooltip();
+    function initTooltips() {
+        // Spots Remaining tooltip
+        const spotsCounter = document.querySelector('.counter-item:nth-child(2)');
+        if (spotsCounter) {
+            spotsCounter.setAttribute('data-tooltip-title', 'Spots Remaining');
+            spotsCounter.setAttribute('data-tooltip-type', 'spots');
+            spotsCounter.setAttribute('data-tooltip-content', 'If we receive less than 100 applications, then every member will get 1B $HERO. If we get more than 100 applications, then the 100 members will be selected by a fair and transparent raffle.');
+            spotsCounter.addEventListener('click', showTooltip);
         }
-    });
-}
+        
+        // Countries tooltip
+        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
+        if (countriesCounter) {
+            countriesCounter.setAttribute('data-tooltip-title', 'Countries');
+            countriesCounter.setAttribute('data-tooltip-type', 'countries');
+            countriesCounter.addEventListener('click', showTooltip);
+        }
+        
+        // Tokens Per Hero tooltip
+        const tokensCounter = document.querySelector('.counter-item:nth-child(4)');
+        if (tokensCounter) {
+            tokensCounter.setAttribute('data-tooltip-title', 'Tokens Per Hero');
+            tokensCounter.setAttribute('data-tooltip-type', 'tokens');
+            tokensCounter.setAttribute('data-tooltip-content', 'Each member will receive 1B out of 100B Total Supply.');
+            tokensCounter.addEventListener('click', showTooltip);
+        }
+        
+        // Document click handler to close tooltip when clicking outside
+        document.addEventListener('click', function(e) {
+            const tooltip = document.querySelector('.tooltip');
+            if (tooltip && 
+                tooltip.style.display === 'block' && 
+                !tooltip.contains(e.target) && 
+                !e.target.closest('[data-tooltip-type]')) {
+                hideTooltip();
+            }
+        });
+    }
 
-// Show countries tooltip - enhanced version
-function showCountriesTooltip(e) {
-    e.stopPropagation(); // Prevent document click from immediately closing it
-    
-    const countriesCounter = e.currentTarget;
-    const countriesListJSON = countriesCounter.getAttribute('data-countries');
-    
-    if (!countriesListJSON) return;
-    
-    try {
-        const countriesList = JSON.parse(countriesListJSON);
-        if (countriesList.length === 0) return;
+    function showTooltip(e) {
+        e.stopPropagation();
         
-        const tooltip = document.querySelector('.countries-tooltip');
-        if (!tooltip) return;
+        const element = e.currentTarget;
+        const tooltipType = element.getAttribute('data-tooltip-type');
+        const tooltipTitle = element.getAttribute('data-tooltip-title');
         
-       // Generate HTML for countries list with better positioned close button
-	let countriesHTML = '<div class="tooltip-close">×</div>';
-	countriesHTML += '<div class="tooltip-title">Countries</div>';
-	countriesHTML += '<div class="countries-list">';
-	countriesList.forEach(country => {
-    	countriesHTML += `<div class="country-item">${country}</div>`;
-	});
-	countriesHTML += '</div>';
- 
-        // Set tooltip content
-        tooltip.innerHTML = countriesHTML;
+        // Create tooltip if it doesn't exist
+        let tooltip = document.querySelector('.tooltip');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            document.body.appendChild(tooltip);
+        }
+        
+        // Generate content based on tooltip type
+        let content = '';
+        
+        if (tooltipType === 'countries') {
+            const countriesListJSON = element.getAttribute('data-countries');
+            if (!countriesListJSON) return;
+            
+            try {
+                const countriesList = JSON.parse(countriesListJSON);
+                if (countriesList.length === 0) return;
+                
+                content = '<div class="tooltip-list">';
+                countriesList.forEach(country => {
+                    content += `<div class="tooltip-item">${country}</div>`;
+                });
+                content += '</div>';
+            } catch (error) {
+                console.error('Error parsing countries data:', error);
+                return;
+            }
+        } 
+        else if (tooltipType === 'spots' || tooltipType === 'tokens') {
+            // Get content from data attribute
+            const tooltipContent = element.getAttribute('data-tooltip-content');
+            content = `<div class="tooltip-text">${tooltipContent}</div>`;
+        }
+        
+        // Set tooltip content with title and close button
+        tooltip.innerHTML = `
+            <div class="tooltip-close">×</div>
+            <div class="tooltip-title">${tooltipTitle}</div>
+            ${content}
+        `;
         
         // Position tooltip at mouse position
         tooltip.style.left = e.pageX + 'px';
@@ -175,30 +208,25 @@ function showCountriesTooltip(e) {
         if (closeButton) {
             closeButton.addEventListener('click', function(e) {
                 e.stopPropagation();
-                hideCountriesTooltip();
+                hideTooltip();
             });
         }
-    } catch (error) {
-        console.error('Error showing countries tooltip:', error);
     }
-}
 
-// Hide countries tooltip
-function hideCountriesTooltip() {
-    const tooltip = document.querySelector('.countries-tooltip');
-    if (tooltip) {
-        tooltip.style.display = 'none';
+    function hideTooltip() {
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) {
+            tooltip.style.display = 'none';
+        }
     }
-}
 
-// Update countries list data attribute
-function updateCountriesList(countriesList) {
-    const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
-    if (countriesCounter) {
-        countriesCounter.setAttribute('data-countries', JSON.stringify(countriesList));
+    // Update countries list data attribute
+    function updateCountriesList(countriesList) {
+        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
+        if (countriesCounter) {
+            countriesCounter.setAttribute('data-countries', JSON.stringify(countriesList));
+        }
     }
-}
-
     
     // Function to fetch and update stats
     function fetchStats() {
@@ -241,7 +269,6 @@ function updateCountriesList(countriesList) {
                 updateCountriesList(['United States', 'Canada', 'United Kingdom', 'Germany', 'Australia', 'Japan', 'Brazil', 'India', 'Nigeria', 'France', 'Sweden', 'Netherlands']);
             });
     }    
-
     
     // Function to update stats display
     function updateStatsDisplay(stats) {
@@ -508,4 +535,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }, index * 300);
     });
 });
-

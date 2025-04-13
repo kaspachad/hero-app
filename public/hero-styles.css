@@ -130,6 +130,7 @@ h1 {
     color: #fff;
     max-width: 700px;
     margin-bottom: 2.5rem;
+    text-align: left;
 }
 
 .hero-description {
@@ -724,16 +725,6 @@ footer {
     }
 }
 
-.tooltip-title {
-    font-size: 1.2rem;
-    color: var(--bright-teal);
-    margin-bottom: 0.8rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(0, 198, 192, 0.3);
-    padding-bottom: 0.5rem;
-    font-weight: 600;
-}
-
 .countries-list {
     max-height: 200px;
     overflow-y: auto;
@@ -756,6 +747,124 @@ footer {
 .country-item:hover {
     background: rgba(0, 198, 192, 0.2);
     box-shadow: 0 0 8px rgba(0, 198, 192, 0.3);
+}
+
+/* Generic tooltip styles */
+.tooltip {
+    position: absolute;
+    z-index: 100;
+    background: rgba(18, 18, 24, 0.95);
+    border: 1px solid var(--teal);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 5px 20px rgba(0, 198, 192, 0.4);
+    width: max-content;
+    max-width: 350px; 
+    max-height: 400px;
+    overflow: hidden;
+    animation: tooltipFadeIn 0.3s ease-in-out;
+}
+
+.tooltip-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    color: var(--teal);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.tooltip-close:hover {
+    background-color: rgba(0, 198, 192, 0.3);
+    color: #fff;
+}
+
+.tooltip-title {
+    padding-right: 30px;
+    position: relative;
+    margin-bottom: 10px;
+    color: var(--bright-teal);
+    font-size: 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 198, 192, 0.3);
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.tooltip-list {
+    max-height: 300px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    margin-top: 8px;
+    padding-right: 5px;
+}
+
+.tooltip-item {
+    color: #fff;
+    font-size: 0.9rem;
+    padding: 0.4rem;
+    border-radius: 4px;
+    background: rgba(0, 198, 192, 0.1);
+    transition: all 0.2s ease;
+    text-align: center;
+    border: 1px solid rgba(0, 198, 192, 0.15);
+}
+
+.tooltip-item:hover {
+    background: rgba(0, 198, 192, 0.2);
+    box-shadow: 0 0 8px rgba(0, 198, 192, 0.3);
+}
+
+.tooltip-text {
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 100%;
+    padding: 0.5rem;
+}
+
+/* Add a small hint to indicate clickable elements */
+[data-tooltip-type] {
+    cursor: pointer;
+    position: relative;
+}
+
+[data-tooltip-type]::after {
+    content: "👁️";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-tooltip-type]:hover::after {
+    opacity: 1;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Make the countries counter have a pointer cursor to indicate it's interactive */
@@ -873,19 +982,14 @@ footer {
 }
 
 .checkbox-container {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 5px 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 10px;
 }
 
 .checkbox-container input[type="checkbox"] {
-    margin-right: 12px;
-    min-width: 18px;
-    height: 18px;
-    position: relative;
-    top: 0;
-    flex-shrink: 0;
+    margin-top: 2px; /* aligns checkbox vertically with label text */
 }
 
 .checkbox-container label {
@@ -894,8 +998,10 @@ footer {
     line-height: 1.4;
     font-weight: normal;
     margin: 0;
-    flex: 1;
+    text-align: left;
+    word-break: normal;
 }
+
 
 /* Highlight for required checkbox validation */
 .highlight-required {
@@ -982,4 +1088,5 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
 
