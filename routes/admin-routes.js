@@ -31,6 +31,9 @@ const authenticateToken = (req, res, next) => {
     }
 };
 
+console.log("🧠 RUNNING admin-routes.js FILE FROM:", __filename);
+
+
 // Serve the admin login page
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/admin-login.html'));
@@ -79,13 +82,18 @@ router.get('/api/admin/stats', authenticateToken, async (req, res) => {
 // Get applicants with pagination and search
 router.get('/api/admin/applicants', authenticateToken, async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const search = req.query.search || '';
+        console.log("=== RAW QUERY PARAMS ===", req.query);
         
-        // Use your existing database function to get applicants
-        const result = await getApplicants(page, limit, search);
-        res.json(result);
+        const page = 1; // hardcoded to isolate bug
+        const limit = 10;
+        const offset = 0;
+
+        const result = await getApplicants(offset, limit);
+
+        console.log(`📦 DB Query → LIMIT ${limit} OFFSET ${offset}`);
+        console.log(`📄 DB returned ${result.length} rows`);
+
+        res.json({ applications: result });
     } catch (error) {
         console.error('Error fetching applicants:', error);
         res.status(500).json({ message: 'Failed to fetch applicants' });

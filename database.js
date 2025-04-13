@@ -60,26 +60,17 @@ async function initDatabase() {
 }
 
 // fetch applications for admin panel
-async function getApplicants(page = 1, limit = 10, search = '') {
-  const offset = (page - 1) * limit;
+async function getApplicants(offset = 0, limit = 10) {
   try {
-    let query = 'SELECT * FROM applications ORDER BY timestamp DESC LIMIT ? OFFSET ?';
-    let params = [limit, offset];
-
-    if (search && search.trim() !== '') {
-      query = `
-        SELECT * FROM applications 
-        WHERE screenname LIKE ? OR email LIKE ? OR country LIKE ? 
-        ORDER BY timestamp DESC LIMIT ? OFFSET ?
-      `;
-      const wildcard = `%${search}%`;
-      params = [wildcard, wildcard, wildcard, limit, offset];
-    }
-
-    const [rows] = await pool.query(query, params);
+    console.log(`📦 DB Query → LIMIT ${limit} OFFSET ${offset}`);
+    const [rows] = await pool.query(
+      'SELECT * FROM applications ORDER BY timestamp DESC LIMIT ? OFFSET ?',
+      [limit, offset]
+    );
+    console.log(`📄 DB returned ${rows.length} rows`);
     return rows;
   } catch (error) {
-    console.error('Error fetching applicants:', error);
+    console.error('❌ DB Error in getApplicants:', error);
     return [];
   }
 }

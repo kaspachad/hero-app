@@ -7,9 +7,14 @@ const db = require('./database');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const adminRoutes = require('./routes/admin-routes');
+
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// admin routes
+app.use('/api/admin', adminRoutes);
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
