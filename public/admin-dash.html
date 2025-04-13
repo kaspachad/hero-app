@@ -3,47 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard - HERO</title>
+  <title>HERO Admin Dashboard</title>
   <link rel="stylesheet" href="/admin-dash.css" />
 </head>
 <body>
-  <h1>HERO Admin Dashboard</h1>
+  <div class="container">
+    <h1>HERO Admin Panel</h1>
 
-  <section id="stats">
-    <h2>Stats</h2>
-    <p><strong>Heroes Enlisted:</strong> <span id="heroes-enlisted"></span></p>
-    <p><strong>Spots Remaining:</strong> <span id="spots-remaining"></span></p>
-    <p><strong>Countries Represented:</strong> <span id="countries"></span></p>
-    <p><strong>Tokens per Hero:</strong> <span id="tokens-per-hero"></span></p>
-    <p><strong>Last Updated:</strong> <span id="last-updated"></span></p>
-  </section>
+    <section id="stats">
+      <div class="counter-item">
+        <div class="counter-value" id="heroes-enlisted">0</div>
+        <div class="counter-title">Heroes Enlisted</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value" id="spots-remaining">100</div>
+        <div class="counter-title">Spots Remaining</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value" id="countries">0</div>
+        <div class="counter-title">Countries</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value" id="tokens-per-hero">1B</div>
+        <div class="counter-title">Tokens Per HERO</div>
+      </div>
+    </section>
 
-  <section id="applications">
-    <h2>Pending Applications</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Screenname</th>
-          <th>Email</th>
-          <th>Country</th>
-          <th>Age</th>
-          <th>Kaspa Address</th>
-          <th>About</th>
-          <th>Submitted</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="applications-body">
-        <!-- Rows will be inserted here -->
-      </tbody>
-    </table>
+    <section>
+      <h2>Applicant Submissions</h2>
 
-    <div id="pagination">
-      <button id="prev-page">Previous</button>
-      <span id="current-page">1</span>
-      <button id="next-page">Next</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Screen Name</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Age</th>
+            <th>Kaspa Address</th>
+            <th>About</th>
+            <th>Submitted At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="applications-body">
+          <!-- Filled dynamically by JS -->
+        </tbody>
+      </table>
+
+      <div id="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="current-page">1</span>
+        <button id="next-page">Next</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Applicant Detail Modal -->
+<div id="applicant-modal">
+  <div id="modal-content">
+    <h3>Applicant Details</h3>
+    <div class="field"><label>Screen Name:</label><span id="modal-screenname"></span></div>
+    <div class="field"><label>Email:</label><span id="modal-email"></span></div>
+    <div class="field"><label>Country:</label><span id="modal-country"></span></div>
+    <div class="field"><label>Age:</label><span id="modal-age"></span></div>
+    <div class="field"><label>Kaspa Address:</label><span id="modal-address"></span></div>
+    <div class="field"><label>About:</label><span id="modal-about"></span></div>
+    <div class="field"><label>Submitted At:</label><span id="modal-timestamp"></span></div>
+    <div id="modal-buttons">
+      <button onclick="approveApp(currentModalApplicantId)">Approve</button>
+      <button onclick="denyApp(currentModalApplicantId)">Deny</button>
+      <button onclick="closeModal()">Cancel</button>
     </div>
-  </section>
+  </div>
+</div>
 
   <script src="/admin-dash.js"></script>
 </body>

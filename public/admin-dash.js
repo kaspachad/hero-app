@@ -1,6 +1,10 @@
 let currentPage = 1;
 const pageSize = 10;
+let currentModalApplicantId = null;
+
+
 const token = localStorage.getItem('authToken');
+
 
 function handleUnauthorized() {
   alert("Session expired or unauthorized. Please log in again.");
@@ -28,7 +32,6 @@ async function fetchStats() {
 }
 
 async function fetchApplications(page) {
-  console.log("📡 Loading page", page);
 
   const res = await fetch(`/api/admin/applicants?page=${page}&limit=${pageSize}`, {
     headers: {
@@ -37,29 +40,28 @@ async function fetchApplications(page) {
   });
 
   const contentType = res.headers.get("content-type");
-  console.log("🧪 Content-Type:", contentType);
 
   if (res.status === 401) return handleUnauthorized();
 
   if (!res.ok) {
     const text = await res.text();
-    console.error("❌ Server error response:", text);
+    console.error("Server error response:", text);
     return;
   }
 
   if (!contentType || !contentType.includes("application/json")) {
     const text = await res.text();
-    console.error("❌ Not JSON response from server");
-    console.log("🔍 Response body:", text);
+    console.error("Not JSON response from server");
+    console.log("Response body:", text);
     return;
   }
 
   let data;
   try {
     data = await res.json();
-    console.log("📨 Parsed data from server:", data);
+    console.log("Parsed data from server:", data);
   } catch (e) {
-    console.warn('❌ Error parsing JSON:', e);
+    console.warn('Error parsing JSON:', e);
     return;
   }
 
@@ -70,6 +72,19 @@ async function fetchApplications(page) {
     tbody.innerHTML = '<tr><td colspan="8">No applications found.</td></tr>';
     return;
   }
+
+  tr.addEventListener('click', () => {
+  currentModalApplicantId = app.id;
+  document.getElementById('modal-screenname').textContent = app.screenname;
+  document.getElementById('modal-email').textContent = app.email;
+  document.getElementById('modal-country').textContent = app.country;
+  document.getElementById('modal-age').textContent = app.age ?? '';
+  document.getElementById('modal-address').textContent = app.kaspa_address;
+  document.getElementById('modal-about').textContent = app.about || '';
+  document.getElementById('modal-timestamp').textContent = new Date(app.timestamp).toLocaleString();
+  document.getElementById('applicant-modal').style.display = 'flex';
+});
+
 
   data.applications.forEach(app => {
     console.log("🧾 Rendering app:", app);
@@ -136,6 +151,12 @@ document.getElementById('next-page').addEventListener('click', () => {
   currentPage++;
   fetchApplications(currentPage);
 });
+
+function closeModal() {
+  document.getElementById('applicant-modal').style.display = 'none';
+  currentModalApplicantId = null;
+}
+
 
 // Initial load
 fetchStats();
