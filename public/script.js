@@ -1,3 +1,40 @@
+// Animate timeline boxes when they come into view
+function initTimelineAnimation() {
+    const timelineBoxes = document.querySelectorAll('.timeline-box');
+    
+    // Check if IntersectionObserver is supported
+    if ('IntersectionObserver' in window) {
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add a slight delay between each item for a staggered effect
+                    const index = Array.from(timelineBoxes).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 300);
+                    
+                    // Unobserve after animation
+                    timelineObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+        
+        // Initially none are active
+        timelineBoxes.forEach(item => {
+            item.classList.remove('active');
+            timelineObserver.observe(item);
+        });
+    } else {
+        // Fallback for browsers that don't support IntersectionObserver
+        // Just make the first one active
+        if (timelineBoxes.length > 0) {
+            timelineBoxes[0].classList.add('active');
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Modal elements
     const joinBtn = document.getElementById('join-league-btn');
@@ -23,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize countdown timer
     initCountdown();
+
+    // Initialize timeline animation
+    initTimelineAnimation();
     
     // Initialize countries tooltip
     initCountriesTooltip();
@@ -53,58 +93,112 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
     }
     
-    // Initialize countries tooltip
-    function initCountriesTooltip() {
-        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
-        if (countriesCounter) {
-            countriesCounter.addEventListener('mouseenter', showCountriesTooltip);
-            countriesCounter.addEventListener('mouseleave', hideCountriesTooltip);
-        }
+    // Enhanced tooltip functionality
+function initCountriesTooltip() {
+    // Update the selector to match your current HTML structure
+    const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
+    if (countriesCounter) {
+        // Change from mouseenter/mouseleave to click
+        countriesCounter.addEventListener('click', showCountriesTooltip);
+        
+        // Remove the mouseleave handler
+        // countriesCounter.removeEventListener('mouseleave', hideCountriesTooltip);
     }
     
-    // Show countries tooltip
-    function showCountriesTooltip(e) {
-        const countriesCounter = e.currentTarget;
-        const countriesListJSON = countriesCounter.getAttribute('data-countries');
-        
-        if (!countriesListJSON) return;
-        
-        try {
-            const countriesList = JSON.parse(countriesListJSON);
-            if (countriesList.length === 0) return;
-            
-            const tooltip = document.querySelector('.countries-tooltip');
-            if (!tooltip) return;
-            
-            // Generate HTML for countries list
-            let countriesHTML = '<div class="tooltip-title">Countries</div><div class="countries-list">';
-            countriesList.forEach(country => {
-                countriesHTML += `<div class="country-item">${country}</div>`;
-            });
-            countriesHTML += '</div>';
-            
-            // Set tooltip content
-            tooltip.innerHTML = countriesHTML;
-            
-            // Position tooltip
-            const rect = countriesCounter.getBoundingClientRect();
-            tooltip.style.left = rect.left + window.scrollX + 'px';
-            tooltip.style.top = rect.bottom + window.scrollY + 10 + 'px';
-            
-            // Show tooltip
-            tooltip.style.display = 'block';
-        } catch (error) {
-            console.error('Error showing countries tooltip:', error);
-        }
-    }
-     
-    // Hide countries tooltip
-    function hideCountriesTooltip() {
+    // Add click handler to document to close tooltip when clicking outside
+    document.addEventListener('click', function(e) {
         const tooltip = document.querySelector('.countries-tooltip');
-        if (tooltip) {
-            tooltip.style.display = 'none';
+        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
+        
+        // If tooltip is visible and click is outside tooltip and outside the counter
+        if (tooltip && 
+            tooltip.style.display === 'block' && 
+            !tooltip.contains(e.target) && 
+            !countriesCounter.contains(e.target)) {
+            hideCountriesTooltip();
         }
+    });
+}
+
+// Show countries tooltip - enhanced version
+function showCountriesTooltip(e) {
+    e.stopPropagation(); // Prevent document click from immediately closing it
+    
+    const countriesCounter = e.currentTarget;
+    const countriesListJSON = countriesCounter.getAttribute('data-countries');
+    
+    if (!countriesListJSON) return;
+    
+    try {
+        const countriesList = JSON.parse(countriesListJSON);
+        if (countriesList.length === 0) return;
+        
+        const tooltip = document.querySelector('.countries-tooltip');
+        if (!tooltip) return;
+        
+       // Generate HTML for countries list with better positioned close button
+	let countriesHTML = '<div class="tooltip-close">×</div>';
+	countriesHTML += '<div class="tooltip-title">Countries</div>';
+	countriesHTML += '<div class="countries-list">';
+	countriesList.forEach(country => {
+    	countriesHTML += `<div class="country-item">${country}</div>`;
+	});
+	countriesHTML += '</div>';
+ 
+        // Set tooltip content
+        tooltip.innerHTML = countriesHTML;
+        
+        // Position tooltip at mouse position
+        tooltip.style.left = e.pageX + 'px';
+        tooltip.style.top = e.pageY + 'px';
+        
+        // Make sure tooltip doesn't go off screen
+        setTimeout(() => {
+            const rect = tooltip.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            if (rect.right > viewportWidth) {
+                tooltip.style.left = (viewportWidth - rect.width - 20) + 'px';
+            }
+            
+            if (rect.bottom > viewportHeight) {
+                tooltip.style.top = (viewportHeight - rect.height - 20) + 'px';
+            }
+        }, 0);
+        
+        // Show tooltip
+        tooltip.style.display = 'block';
+        
+        // Add click handler to close button
+        const closeButton = tooltip.querySelector('.tooltip-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hideCountriesTooltip();
+            });
+        }
+    } catch (error) {
+        console.error('Error showing countries tooltip:', error);
     }
+}
+
+// Hide countries tooltip
+function hideCountriesTooltip() {
+    const tooltip = document.querySelector('.countries-tooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
+}
+
+// Update countries list data attribute
+function updateCountriesList(countriesList) {
+    const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
+    if (countriesCounter) {
+        countriesCounter.setAttribute('data-countries', JSON.stringify(countriesList));
+    }
+}
+
     
     // Function to fetch and update stats
     function fetchStats() {
@@ -148,27 +242,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }    
 
-    // Update countries list data attribute
-    function updateCountriesList(countriesList) {
-        const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
-        if (countriesCounter) {
-            countriesCounter.setAttribute('data-countries', JSON.stringify(countriesList));
-        }
-    }
     
     // Function to update stats display
     function updateStatsDisplay(stats) {
         // Apply animation by adding and removing a class
         [heroesEnlistedEl, spotsRemainingEl, countriesEl, tokensPerHeroEl].forEach(el => {
-            el.classList.add('updating');
-            setTimeout(() => el.classList.remove('updating'), 1000);
+            if (el) {
+                el.classList.add('updating');
+                setTimeout(() => el.classList.remove('updating'), 1000);
+            }
         });
         
         // Update values with animation
-        heroesEnlistedEl.textContent = stats.heroes_enlisted;
-        spotsRemainingEl.textContent = stats.spots_remaining;
-        countriesEl.textContent = stats.countries;
-        tokensPerHeroEl.textContent = stats.tokens_per_hero;
+        if (heroesEnlistedEl) heroesEnlistedEl.textContent = stats.heroes_enlisted;
+        if (spotsRemainingEl) spotsRemainingEl.textContent = stats.spots_remaining;
+        if (countriesEl) countriesEl.textContent = stats.countries;
+        if (tokensPerHeroEl) tokensPerHeroEl.textContent = stats.tokens_per_hero;
     }
     
     // Helper function to show a specific screen
@@ -408,3 +497,15 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.classList.remove('active');
     });
 });
+
+/* Add animation class to timeline boxes */
+document.addEventListener('DOMContentLoaded', function() {
+    // Add this to handle the animation of timeline boxes
+    const timelineBoxes = document.querySelectorAll('.timeline-box');
+    timelineBoxes.forEach((box, index) => {
+        setTimeout(() => {
+            box.classList.add('active');
+        }, index * 300);
+    });
+});
+

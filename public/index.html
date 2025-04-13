@@ -17,40 +17,11 @@
                 <div class="logo-img"><img src="hero-logo.png" height="80" width="80"></div>
                 <div class="logo-text">HERO</div>
             </div>
-
-<!-- Ominous Countdown Timer Section -->
-<div style="background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(255, 0, 0, 0.2); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); position: relative; overflow: hidden;">
-    <!-- Red pulsing glow effect -->
-    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; animation: pulse 3s ease-in-out infinite alternate;"></div>
-    
-    <div style="font-size: 1.4rem; color: #ff3b3b; margin-bottom: 1.2rem; letter-spacing: 0.05rem; font-weight: 600; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">APPLICATION DEADLINE: JUNE 20TH, 2025</div>
-    
-    <div style="font-size: 1.8rem; font-weight: 700; color: #fff; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
-        <span id="countdown-days" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">d</div>
-        
-        <span id="countdown-hours" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 0.5s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">h</div>
-        
-        <span id="countdown-minutes" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">m</div>
-        
-        <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
-    </div>
-    
-    <!-- Small warning text -->
-    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #ff6b6b; font-style: italic;">It's astounding. Time is fleeting. Madness takes its toll.</div>
-</div>
-
-
-
         </header>
 
-
         <main>
-            <section class="hero-section">
 
+            <section class="hero-section">
                 <h1>JOIN THE LEAGUE OF HEROES</h1>
                 
                 <div class="tagline">
@@ -62,26 +33,51 @@
                     <a href="#" class="cta-btn" id="join-league-btn">Join the League</a>
                 </div>
             </section>
-            
-            <section class="counter-container">
-                <div class="counter-item">
-                    <div class="counter-value" id="heroes-enlisted">0</div>
-                    <div class="counter-title">Heroes Enlisted</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-value" id="spots-remaining">100</div>
-                    <div class="counter-title">Spots Remaining</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-value" id="countries">0</div>
-                    <div class="counter-title">Countries</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-value" id="tokens-per-hero">1B</div>
-                    <div class="counter-title">Tokens Per HERO</div>
-                </div>
-            </section>
- 
+           
+
+<!--h3 class="section-title">Current Stats</h3-->
+<div class="hero-grid">
+  <!-- Stats Boxes -->
+  <div class="grid-item counter-item">
+    <div class="counter-value" id="heroes-enlisted">5</div>
+    <div class="counter-title">HEROES ENLISTED</div>
+  </div>
+  
+  <div class="grid-item counter-item">
+    <div class="counter-value" id="spots-remaining">95</div>
+    <div class="counter-title">SPOTS REMAINING</div>
+  </div>
+  
+  <div class="grid-item counter-item">
+    <div class="counter-value" id="countries">5</div>
+    <div class="counter-title">COUNTRIES</div>
+  </div>
+  
+  <div class="grid-item counter-item">
+    <div class="counter-value" id="tokens-per-hero">1B</div>
+    <div class="counter-title">TOKENS PER HERO</div>
+  </div>
+  
+  <!-- Timeline Boxes >
+  <div class="grid-item timeline-box">
+    <div class="timeline-date">Current</div>
+    <div class="timeline-count">1 Holder</div>
+    <div class="timeline-desc">Development Wallet</div>
+  </div>
+  
+  <div class="grid-item timeline-box">
+    <div class="timeline-date">July 1st, 2025</div>
+    <div class="timeline-count">100 Holders</div>
+    <div class="timeline-desc">Hero League Members</div>
+  </div>
+  
+  <div class="grid-item timeline-box">
+    <div class="timeline-date">TBD</div>
+    <div class="timeline-count">Public Launch</div>
+    <div class="timeline-desc">Stay Tuned</div>
+  </div-->
+</div>
+
             <section class="hero-description">
                 <div class="hero-info">
                     <h2>The Mission</h2>
@@ -109,7 +105,33 @@
             <h3>KASPA BLOCKCHAIN</h3>
             <p>$HERO is a KRC20 token built on Kaspa, the fastest, open-source, decentralized & fully scalable Layer-1 blockchain, implementing the GHOSTDAG protocol. Total supply: 100 billion HERO tokens distributed equally among 100 individuals (1% reserved for development).</p>
         </div>
+    
+<!-- Ominous Countdown Timer Section -->
+<div style="background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(255, 0, 0, 0.2); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); position: relative; overflow: hidden;">
+    <!-- Red pulsing glow effect -->
+    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; animation: pulse 3s ease-in-out infinite alternate;"></div>
+    
+    <div style="font-size: 1.4rem; color: #ff3b3b; margin-bottom: 1.2rem; letter-spacing: 0.05rem; font-weight: 600; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">APPLICATION DEADLINE: JUNE 20TH, 2025</div>
+    
+    <div style="font-size: 1.8rem; font-weight: 700; color: #fff; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+        <span id="countdown-days" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">d</div>
         
+        <span id="countdown-hours" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 0.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">h</div>
+        
+        <span id="countdown-minutes" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">m</div>
+        
+        <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
+    </div>
+    
+    <!-- Small warning text -->
+    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #ff6b6b; font-style: italic;">It's astounding. Time is fleeting. Madness takes its toll.</div>
+</div>
+
+    
         <footer>
             <div class="disclaimer">
                 $HERO is a meme token with no intrinsic value and no expectation of return. This is not financial advice. Participate at your own risk.
