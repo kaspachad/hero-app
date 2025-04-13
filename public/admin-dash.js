@@ -1,6 +1,7 @@
 let currentPage = 1;
 const pageSize = 10;
 const token = localStorage.getItem('authToken');
+const authHeader = { Authorization: `Bearer ${token}` };
 
 async function fetchStats() {
   const res = await fetch('/api/admin/stats', {
@@ -28,11 +29,10 @@ async function fetchStats() {
 
 async function fetchApplications(page) {
 
-const res = await fetch(`/api/admin/applicants?page=${page}&limit=${pageSize}`, {
-headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  const res = await fetch(`/api/admin/applicants?page=${page}&limit=${pageSize}`, {
+  headers: authHeader
+});
+
 
   if (res.status === 401) return handleUnauthorized();
 
@@ -80,12 +80,10 @@ headers: {
 
 
 async function approveApp(id) {
-  const res = await fetch(`/api/admin/approve/${id}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+const res = await fetch(`/api/admin/approve/${id}`, {
+  method: 'POST',
+  headers: authHeader
+});
 
   if (res.status === 401) return handleUnauthorized();
 
@@ -99,11 +97,10 @@ async function approveApp(id) {
 
 async function denyApp(id) {
   const res = await fetch(`/api/admin/deny/${id}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  method: 'POST',
+  headers: authHeader
+});
+
 
   if (res.status === 401) return handleUnauthorized();
 
