@@ -6,18 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form screens
     const initialScreen = document.getElementById('initial-screen');
-    const screen1 = document.getElementById('screen1');
-    const screen2 = document.getElementById('screen2');
-    const screen3 = document.getElementById('screen3');
+    const unifiedForm = document.getElementById('unified-form');
     const successScreen = document.getElementById('success-screen');
     
     // Navigation buttons
     const startApplication = document.getElementById('start-application');
-    const next1Button = document.getElementById('next1');
-    const prev2Button = document.getElementById('prev2');
-    const next2Button = document.getElementById('next2');
-    const prev3Button = document.getElementById('prev3');
-    const skipSubmitButton = document.getElementById('skip-submit');
+    const backToIntroBtn = document.getElementById('back-to-intro');
     const submitButton = document.getElementById('submit-application');
     const closeSuccessButton = document.getElementById('close-success');
     
@@ -68,43 +62,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-
-// Show countries tooltip
-function showCountriesTooltip(e) {
-    const countriesCounter = e.currentTarget;
-    const countriesListJSON = countriesCounter.getAttribute('data-countries');
-    
-    if (!countriesListJSON) return;
-    
-    try {
-        const countriesList = JSON.parse(countriesListJSON);
-        if (countriesList.length === 0) return;
+    // Show countries tooltip
+    function showCountriesTooltip(e) {
+        const countriesCounter = e.currentTarget;
+        const countriesListJSON = countriesCounter.getAttribute('data-countries');
         
-        const tooltip = document.querySelector('.countries-tooltip');
-        if (!tooltip) return;
+        if (!countriesListJSON) return;
         
-        // Generate HTML for countries list
-        let countriesHTML = '<div class="tooltip-title">Countries</div><div class="countries-list">';
-        countriesList.forEach(country => {
-            countriesHTML += `<div class="country-item">${country}</div>`;
-        });
-        countriesHTML += '</div>';
-        
-        // Set tooltip content
-        tooltip.innerHTML = countriesHTML;
-        
-        // Position tooltip
-        const rect = countriesCounter.getBoundingClientRect();
-        tooltip.style.left = rect.left + window.scrollX + 'px';
-        tooltip.style.top = rect.bottom + window.scrollY + 10 + 'px';
-        
-        // Show tooltip
-        tooltip.style.display = 'block';
-    } catch (error) {
-        console.error('Error showing countries tooltip:', error);
+        try {
+            const countriesList = JSON.parse(countriesListJSON);
+            if (countriesList.length === 0) return;
+            
+            const tooltip = document.querySelector('.countries-tooltip');
+            if (!tooltip) return;
+            
+            // Generate HTML for countries list
+            let countriesHTML = '<div class="tooltip-title">Countries</div><div class="countries-list">';
+            countriesList.forEach(country => {
+                countriesHTML += `<div class="country-item">${country}</div>`;
+            });
+            countriesHTML += '</div>';
+            
+            // Set tooltip content
+            tooltip.innerHTML = countriesHTML;
+            
+            // Position tooltip
+            const rect = countriesCounter.getBoundingClientRect();
+            tooltip.style.left = rect.left + window.scrollX + 'px';
+            tooltip.style.top = rect.bottom + window.scrollY + 10 + 'px';
+            
+            // Show tooltip
+            tooltip.style.display = 'block';
+        } catch (error) {
+            console.error('Error showing countries tooltip:', error);
+        }
     }
-}
- 
+     
     // Hide countries tooltip
     function hideCountriesTooltip() {
         const tooltip = document.querySelector('.countries-tooltip');
@@ -113,48 +106,47 @@ function showCountriesTooltip(e) {
         }
     }
     
-  // Function to fetch and update stats
-function fetchStats() {
-    // For demo purposes, use placeholder stats if API is not available
-    const demoStats = {
-        success: true,
-        stats: {
-            heroes_enlisted: 23,
-            spots_remaining: 77,
-            countries: 12,
-            tokens_per_hero: '1B'
-        }
-    };
-    
-    // Fetch stats
-    fetch('/api/stats')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.stats) {
-                updateStatsDisplay(data.stats);
+    // Function to fetch and update stats
+    function fetchStats() {
+        // For demo purposes, use placeholder stats if API is not available
+        const demoStats = {
+            success: true,
+            stats: {
+                heroes_enlisted: 23,
+                spots_remaining: 77,
+                countries: 12,
+                tokens_per_hero: '1B'
             }
-        })
-        .catch(error => {
-            console.error('Error fetching stats:', error);
-            // Use demo stats if API fails
-            updateStatsDisplay(demoStats.stats);
-        });
-    
-    // Fetch countries list separately
-    fetch('/api/countries')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.countries) {
-                updateCountriesList(data.countries);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching countries:', error);
-            // Use demo countries if API fails
-            updateCountriesList(['United States', 'Canada', 'United Kingdom', 'Germany', 'Australia', 'Japan', 'Brazil', 'India', 'Nigeria', 'France', 'Sweden', 'Netherlands']);
-        });
-}    
-
+        };
+        
+        // Fetch stats
+        fetch('/api/stats')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.stats) {
+                    updateStatsDisplay(data.stats);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching stats:', error);
+                // Use demo stats if API fails
+                updateStatsDisplay(demoStats.stats);
+            });
+        
+        // Fetch countries list separately
+        fetch('/api/countries')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.countries) {
+                    updateCountriesList(data.countries);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching countries:', error);
+                // Use demo countries if API fails
+                updateCountriesList(['United States', 'Canada', 'United Kingdom', 'Germany', 'Australia', 'Japan', 'Brazil', 'India', 'Nigeria', 'France', 'Sweden', 'Netherlands']);
+            });
+    }    
 
     // Update countries list data attribute
     function updateCountriesList(countriesList) {
@@ -183,20 +175,32 @@ function fetchStats() {
     function showScreen(screen) {
         // Hide all screens
         initialScreen.classList.remove('active');
-        screen1.classList.remove('active');
-        screen2.classList.remove('active');
-        screen3.classList.remove('active');
+        unifiedForm.classList.remove('active');
         successScreen.classList.remove('active');
         
         // Show the requested screen
         screen.classList.add('active');
+        
+        // Reset scroll position whenever screen changes
+        if (document.querySelector('.modal-content')) {
+            document.querySelector('.modal-content').scrollTop = 0;
+        }
     }
     
     // Open modal when join button is clicked
     joinBtn.addEventListener('click', function(e) {
         e.preventDefault();
+        
+        // First make sure scroll position is restored
+        const scrollPosition = window.scrollY;
+        
         modal.classList.add('active');
         showScreen(initialScreen);
+        
+        // Maintain page scroll position
+        setTimeout(function() {
+            window.scrollTo(0, scrollPosition);
+        }, 10);
     });
     
     // Close modal when close button is clicked
@@ -213,37 +217,53 @@ function fetchStats() {
     
     // Start application
     startApplication.addEventListener('click', function() {
-        showScreen(screen1);
+        showScreen(unifiedForm);
+        // Ensure any autofocus doesn't cause jumping
+        setTimeout(function() {
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+        }, 10);
     });
     
-    // Navigate to screen 2
-    next1Button.addEventListener('click', function() {
-        // Validate inputs
+    // Go back to intro screen
+    backToIntroBtn.addEventListener('click', function() {
+        showScreen(initialScreen);
+    });
+    
+    // Prevent space key from scrolling the page when clicking the checkbox
+    if (document.getElementById('agree-terms')) {
+        document.getElementById('agree-terms').addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Submit application function
+    function submitApplication() {
+        // Validate all inputs
         const screenName = document.getElementById('screen-name').value;
         const age = document.getElementById('age').value;
+        const email = document.getElementById('email').value;
+        const country = document.getElementById('country').value;
+        const kaspaAddress = document.getElementById('kaspa-address').value;
+        const agreeTerms = document.getElementById('agree-terms').checked;
         
-        if (!screenName || !age) {
-            alert('Please fill in all fields!');
+        // Basic validation
+        if (!screenName || !age || !email || !country || !kaspaAddress) {
+            alert('Please fill out all required fields!');
             return;
         }
         
-        showScreen(screen2);
-    });
-    
-    // Go back to screen 1
-    prev2Button.addEventListener('click', function() {
-        showScreen(screen1);
-    });
-    
-    // Navigate to screen 3
-    next2Button.addEventListener('click', function() {
-        // Validate inputs
-        const country = document.getElementById('country').value;
-        const email = document.getElementById('email').value;
-        const kaspaAddress = document.getElementById('kaspa-address').value;
-        
-        if (!country || !email || !kaspaAddress) {
-            alert('Please fill in all fields!');
+        // Specifically check for terms agreement
+        if (!agreeTerms) {
+            alert('You must acknowledge the terms to proceed.');
+            // Highlight the checkbox to draw attention
+            document.getElementById('agree-terms').parentElement.classList.add('highlight-required');
+            setTimeout(() => {
+                document.getElementById('agree-terms').parentElement.classList.remove('highlight-required');
+            }, 2000);
             return;
         }
         
@@ -254,31 +274,20 @@ function fetchStats() {
             return;
         }
         
-        showScreen(screen3);
-    });
-    
-    // Go back to screen 2
-    prev3Button.addEventListener('click', function() {
-        showScreen(screen2);
-    });
-    
-    // Submit application function
-    function submitApplication(skipIntro = false) {
         // Get form data
         const formData = {
-            screenname: document.getElementById('screen-name').value,
-            age: document.getElementById('age').value,
-            country: document.getElementById('country').value,
-            email: document.getElementById('email').value,
-            'kaspa-address': document.getElementById('kaspa-address').value,
-            introduction: skipIntro ? '' : document.getElementById('introduction').value
+            screenname: screenName,
+            age: age,
+            country: country,
+            email: email,
+            'kaspa-address': kaspaAddress,
+            introduction: document.getElementById('introduction').value
         };
         
-        // Show loading state (visual change on the button that was clicked)
-        const activeButton = skipIntro ? skipSubmitButton : submitButton;
-        const originalBtnText = activeButton.textContent;
-        activeButton.textContent = 'Submitting...';
-        activeButton.disabled = true;
+        // Show loading state
+        const originalBtnText = submitButton.textContent;
+        submitButton.textContent = 'Submitting...';
+        submitButton.disabled = true;
         
         // Submit form data to the server
         fetch('/api/submit-application', {
@@ -292,8 +301,8 @@ function fetchStats() {
         .then(data => {
             if (data.success) {
                 // Reset button state
-                activeButton.textContent = originalBtnText;
-                activeButton.disabled = false;
+                submitButton.textContent = originalBtnText;
+                submitButton.disabled = false;
                 
                 // Show success screen
                 showScreen(successScreen);
@@ -342,8 +351,8 @@ function fetchStats() {
                 alert(`Error: ${data.message || 'Failed to submit your application. Please try again.'}`);
                 
                 // Reset button state
-                activeButton.textContent = originalBtnText;
-                activeButton.disabled = false;
+                submitButton.textContent = originalBtnText;
+                submitButton.disabled = false;
             }
         })
         .catch(error => {
@@ -351,8 +360,8 @@ function fetchStats() {
             alert('An error occurred. Please try again later.');
             
             // Reset button state
-            activeButton.textContent = originalBtnText;
-            activeButton.disabled = false;
+            submitButton.textContent = originalBtnText;
+            submitButton.disabled = false;
             
             // For demo purposes, show success anyway
             showScreen(successScreen);
@@ -375,14 +384,9 @@ function fetchStats() {
         });
     }
     
-    // Skip intro and submit
-    skipSubmitButton.addEventListener('click', function() {
-        submitApplication(true);
-    });
-    
     // Submit with intro
     submitButton.addEventListener('click', function() {
-        submitApplication(false);
+        submitApplication();
     });
     
     // Close success screen
@@ -394,6 +398,11 @@ function fetchStats() {
         document.getElementById('email').value = '';
         document.getElementById('kaspa-address').value = '';
         document.getElementById('introduction').value = '';
+        
+        // Reset checkbox
+        if (document.getElementById('agree-terms')) {
+            document.getElementById('agree-terms').checked = false;
+        }
         
         // Close the modal
         modal.classList.remove('active');
