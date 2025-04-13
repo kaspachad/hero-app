@@ -1,7 +1,12 @@
 let currentPage = 1;
 const pageSize = 10;
 const token = localStorage.getItem('authToken');
-const authHeader = { Authorization: `Bearer ${token}` };
+
+function handleUnauthorized() {
+  alert("Session expired or unauthorized. Please log in again.");
+  localStorage.removeItem('authToken');
+  window.location.href = '/admin';
+}
 
 async function fetchStats() {
   const res = await fetch('/api/admin/stats', {
@@ -11,11 +16,6 @@ async function fetchStats() {
   });
 
   if (res.status === 401) return handleUnauthorized();
-
-  if (!res.ok) {
-    console.error('Stats fetch failed with status', res.status);
-    return;
-  }
 
   const data = await res.json();
   document.getElementById('heroes-enlisted').textContent = data.heroes_enlisted ?? 0;
@@ -28,25 +28,39 @@ async function fetchStats() {
 }
 
 async function fetchApplications(page) {
+  console.log("📡 Loading page", page);
 
   const res = await fetch(`/api/admin/applicants?page=${page}&limit=${pageSize}`, {
-  headers: authHeader
-});
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
+  const contentType = res.headers.get("content-type");
+  console.log("🧪 Content-Type:", contentType);
 
   if (res.status === 401) return handleUnauthorized();
 
   if (!res.ok) {
-    console.error('Applications fetch failed with status', res.status);
+    const text = await res.text();
+    console.error("❌ Server error response:", text);
     return;
   }
 
-  let data = {};
+  if (!contentType || !contentType.includes("application/json")) {
+    const text = await res.text();
+    console.error("❌ Not JSON response from server");
+    console.log("🔍 Response body:", text);
+    return;
+  }
+
+  let data;
   try {
     data = await res.json();
+    console.log("📨 Parsed data from server:", data);
   } catch (e) {
-    console.warn('No JSON response (likely empty DB)');
-    data.applications = [];
+    console.warn('❌ Error parsing JSON:', e);
+    return;
   }
 
   const tbody = document.getElementById('applications-body');
@@ -58,6 +72,7 @@ async function fetchApplications(page) {
   }
 
   data.applications.forEach(app => {
+    console.log("🧾 Rendering app:", app);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${app.screenname}</td>
@@ -78,12 +93,11 @@ async function fetchApplications(page) {
   document.getElementById('current-page').textContent = page;
 }
 
-
 async function approveApp(id) {
-const res = await fetch(`/api/admin/approve/${id}`, {
-  method: 'POST',
-  headers: authHeader
-});
+  const res = await fetch(`/api/admin/approve/${id}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` }
+  });
 
   if (res.status === 401) return handleUnauthorized();
 
@@ -97,10 +111,9 @@ const res = await fetch(`/api/admin/approve/${id}`, {
 
 async function denyApp(id) {
   const res = await fetch(`/api/admin/deny/${id}`, {
-  method: 'POST',
-  headers: authHeader
-});
-
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` }
+  });
 
   if (res.status === 401) return handleUnauthorized();
 
@@ -110,12 +123,6 @@ async function denyApp(id) {
   } else {
     alert('Denial failed.');
   }
-}
-
-function handleUnauthorized() {
-  alert("Session expired. Please log in again.");
-  localStorage.removeItem('authToken');
-  window.location.href = '/admin';
 }
 
 document.getElementById('prev-page').addEventListener('click', () => {
@@ -130,6 +137,7 @@ document.getElementById('next-page').addEventListener('click', () => {
   fetchApplications(currentPage);
 });
 
+// Initial load
 fetchStats();
 fetchApplications(currentPage);
 

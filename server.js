@@ -126,21 +126,6 @@ app.post('/api/submit-application', async (req, res) => {
   }
 });
 
-// Get all applications (for admin purposes)
-app.get('/api/applications', async (req, res) => {
-  try {
-    // This should be protected with authentication in a real app
-    const [applications] = await db.pool.query(
-      'SELECT * FROM applications ORDER BY timestamp DESC'
-    );
-    
-    res.json({ success: true, applications });
-  } catch (error) {
-    console.error('Error fetching applications:', error);
-    res.status(500).json({ success: false, message: 'Server error fetching applications' });
-  }
-});
-
 // ===== ADMIN ROUTES =====
 
 // Serve the admin login page
@@ -185,22 +170,6 @@ app.get('/api/admin/stats', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);
         res.status(500).json({ message: 'Failed to fetch dashboard statistics' });
-    }
-});
-
-// Get applicants with pagination and search
-app.get('/api/admin/applicants', authenticateToken, async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const search = req.query.search || '';
-        
-        // Use the function from database.js to get applicants
-        const result = await db.getApplicants(page, limit, search);
-        res.json(result);
-    } catch (error) {
-        console.error('Error fetching applicants:', error);
-        res.status(500).json({ message: 'Failed to fetch applicants' });
     }
 });
 
