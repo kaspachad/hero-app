@@ -18,54 +18,38 @@
                 <div class="logo-text">HERO</div>
             </div>
 
+<!-- Ominous Countdown Timer Section -->
+<div style="background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(255, 0, 0, 0.2); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); position: relative; overflow: hidden;">
+    <!-- Red pulsing glow effect -->
+    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; animation: pulse 3s ease-in-out infinite alternate;"></div>
+    
+    <div style="font-size: 1.4rem; color: #ff3b3b; margin-bottom: 1.2rem; letter-spacing: 0.05rem; font-weight: 600; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">APPLICATION DEADLINE: JUNE 20TH, 2025</div>
+    
+    <div style="font-size: 1.8rem; font-weight: 700; color: #fff; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+        <span id="countdown-days" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">d</div>
+        
+        <span id="countdown-hours" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 0.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">h</div>
+        
+        <span id="countdown-minutes" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">m</div>
+        
+        <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
+    </div>
+    
+    <!-- Small warning text -->
+    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #ff6b6b; font-style: italic;">It's astounding. Time is fleeting. Madness takes its toll.</div>
+</div>
+
+
+
         </header>
+
 
         <main>
             <section class="hero-section">
-
-
-<!-- Self-contained test tooltip -->
-<div id="direct-test" style="position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; z-index: 9999;">
-  Hover Me For Test Tooltip
-</div>
-
-<div id="direct-tooltip" style="display: none; position: fixed; bottom: 80px; right: 20px; background: #111; color: white; padding: 15px; border-radius: 5px; border: 1px solid #00E0DA; z-index: 9999; width: 200px;">
-  This is a direct test tooltip that doesn't rely on your existing code.
-</div>
-
-<script>
-  // Self-contained tooltip test
-  document.addEventListener('DOMContentLoaded', function() {
-    const testElement = document.getElementById('direct-test');
-    const tooltip = document.getElementById('direct-tooltip');
-    
-    if (testElement && tooltip) {
-      console.log("Direct test elements found");
-      
-      testElement.addEventListener('mouseenter', function() {
-        console.log("Mouse entered test element");
-        tooltip.style.display = 'block';
-      });
-      
-      testElement.addEventListener('mouseleave', function() {
-        console.log("Mouse left test element");
-        tooltip.style.display = 'none';
-      });
-      
-      // Also add click functionality as a fallback
-      testElement.addEventListener('click', function() {
-        console.log("Test element clicked");
-        if (tooltip.style.display === 'none' || !tooltip.style.display) {
-          tooltip.style.display = 'block';
-        } else {
-          tooltip.style.display = 'none';
-        }
-      });
-    } else {
-      console.error("Could not find direct test elements");
-    }
-  });
-</script>
 
                 <h1>JOIN THE LEAGUE OF HEROES</h1>
                 
@@ -97,35 +81,6 @@
                     <div class="counter-title">Tokens Per HERO</div>
                 </div>
             </section>
-
-
-<!-- Ominous Countdown Timer Section -->
-<div style="background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(255, 0, 0, 0.2); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); position: relative; overflow: hidden;">
-    <!-- Red pulsing glow effect -->
-    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; animation: pulse 3s ease-in-out infinite alternate;"></div>
-    
-    <div style="font-size: 1.4rem; color: #ff3b3b; margin-bottom: 1.2rem; letter-spacing: 0.05rem; font-weight: 600; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">APPLICATION DEADLINE: JUNE 20TH, 2025</div>
-    
-    <div style="font-size: 1.8rem; font-weight: 700; color: #fff; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
-        <span id="countdown-days" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">d</div>
-        
-        <span id="countdown-hours" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 0.5s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">h</div>
-        
-        <span id="countdown-minutes" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">m</div>
-        
-        <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
-        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
-    </div>
-    
-    <!-- Small warning text -->
-    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #ff6b6b; font-style: italic;">It's astounding. Time is fleeting. Madness takes its toll.</div>
-</div>
-
-
-           
  
             <section class="hero-description">
                 <div class="hero-info">
@@ -177,7 +132,15 @@
             <!-- Initial Screen -->
             <div id="initial-screen" class="form-screen active">
                 <h3>Become a HERO</h3>
-                <p style="text-align: center; margin-bottom: 2rem;">Are you ready to join the mightiest team of superheroes in the universe?</p>
+                <p style="text-align: center; margin-bottom: 2rem;">
+                    <strong>Hero League Membership Selection</strong><br><br>
+                    This is more than a token drop — it's a social experiment in radical equality. 
+                    100 applicants will be selected to join our collective governance initiative.<br><br>
+                    Each HERO will receive a HERO Wallet, full platform access, and equal voting rights in all governance decisions. 
+                    This project operates on a foundation of true equality—all members share identical rights within our decentralized structure.<br><br>
+                    <strong>Note:</strong> We reserve the right to disqualify applications based on regulatory requirements, including age verification, geographical restrictions, or evidence of inauthentic participation. 
+                    If applications exceed our capacity of 100 members, final selection will be conducted via a transparent randomized process.
+                </p>
                 <div class="button-group">
                     <button id="start-application" class="submit-btn">Start Application</button>
                 </div>
@@ -313,7 +276,7 @@
             
             <!-- Success Screen -->
             <div id="success-screen" class="form-screen">
-                <div class="hero-kid"> <img src="hero-logo-md.png" alt="Hero Logo"></div>
+                <div class="hero-kid"></div>
                 <h3>Application Received!</h3>
                 <div class="success-message">Welcome to the League of Heroes!</div>
                 <p style="text-align: center; margin-bottom: 1.5rem;">Your superhero application has been submitted. The Council of Heroes will review your powers and contact you soon!</p>
