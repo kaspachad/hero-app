@@ -89,38 +89,29 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('login-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                const response = await fetch('/api/admin/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    // Save the token to localStorage
-                    localStorage.setItem('adminToken', data.token);
-                    // Redirect to admin dashboard
-                    window.location.href = '/admin/dashboard';
-                } else {
-                    // Show error message
-                    document.getElementById('error-message').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                document.getElementById('error-message').style.display = 'block';
-            }
-        });
-    </script>
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const res = await fetch('/api/admin/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (res.ok && data.token) {
+    localStorage.setItem('authToken', data.token);
+    window.location.href = '/admin/dashboard';
+  } else {
+    alert(data.message || 'Login failed');
+  }
+});
+</script>
+
+
 </body>
 </html>
