@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HERO - Join the League | KRC20 Token</title>
+    <link rel="stylesheet" href="/hero-styles.css">
+</head>
+<body>
+    <div class="circuit-bg"></div>
+    <div class="teal-glow glow-1"></div>
+    <div class="teal-glow glow-2"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-img"><img src="hero-logo.png" height="80" width="80"></div>
+                <div class="logo-text">HERO</div>
+            </div>
+
+        </header>
+
+        <main>
+            <section class="hero-section">
+
+
+<!-- Self-contained test tooltip -->
+<div id="direct-test" style="position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; z-index: 9999;">
+  Hover Me For Test Tooltip
+</div>
+
+<div id="direct-tooltip" style="display: none; position: fixed; bottom: 80px; right: 20px; background: #111; color: white; padding: 15px; border-radius: 5px; border: 1px solid #00E0DA; z-index: 9999; width: 200px;">
+  This is a direct test tooltip that doesn't rely on your existing code.
+</div>
+
+<script>
+  // Self-contained tooltip test
+  document.addEventListener('DOMContentLoaded', function() {
+    const testElement = document.getElementById('direct-test');
+    const tooltip = document.getElementById('direct-tooltip');
+    
+    if (testElement && tooltip) {
+      console.log("Direct test elements found");
+      
+      testElement.addEventListener('mouseenter', function() {
+        console.log("Mouse entered test element");
+        tooltip.style.display = 'block';
+      });
+      
+      testElement.addEventListener('mouseleave', function() {
+        console.log("Mouse left test element");
+        tooltip.style.display = 'none';
+      });
+      
+      // Also add click functionality as a fallback
+      testElement.addEventListener('click', function() {
+        console.log("Test element clicked");
+        if (tooltip.style.display === 'none' || !tooltip.style.display) {
+          tooltip.style.display = 'block';
+        } else {
+          tooltip.style.display = 'none';
+        }
+      });
+    } else {
+      console.error("Could not find direct test elements");
+    }
+  });
+</script>
+
+                <h1>JOIN THE LEAGUE OF HEROES</h1>
+                
+                <div class="tagline">
+                    A community of 100 individuals on the Kaspa blockchain. Each HERO receives exactly 1% of the total token supply (1B tokens). Truly decentralized. Truly fair. Will you answer the call?
+                </div>
+
+                
+                <div class="cta-buttons">
+                    <a href="#" class="cta-btn" id="join-league-btn">Join the League</a>
+                </div>
+            </section>
+            
+            <section class="counter-container">
+                <div class="counter-item">
+                    <div class="counter-value" id="heroes-enlisted">0</div>
+                    <div class="counter-title">Heroes Enlisted</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="spots-remaining">100</div>
+                    <div class="counter-title">Spots Remaining</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="countries">0</div>
+                    <div class="counter-title">Countries</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="tokens-per-hero">1B</div>
+                    <div class="counter-title">Tokens Per HERO</div>
+                </div>
+            </section>
+
+
+<!-- Ominous Countdown Timer Section -->
+<div style="background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(255, 0, 0, 0.2); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); position: relative; overflow: hidden;">
+    <!-- Red pulsing glow effect -->
+    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%); z-index: -1; animation: pulse 3s ease-in-out infinite alternate;"></div>
+    
+    <div style="font-size: 1.4rem; color: #ff3b3b; margin-bottom: 1.2rem; letter-spacing: 0.05rem; font-weight: 600; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">APPLICATION DEADLINE: JUNE 20TH, 2025</div>
+    
+    <div style="font-size: 1.8rem; font-weight: 700; color: #fff; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+        <span id="countdown-days" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">d</div>
+        
+        <span id="countdown-hours" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 0.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">h</div>
+        
+        <span id="countdown-minutes" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">m</div>
+        
+        <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #300 0%, #700 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #900; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5); text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
+        <div style="color: #aaa; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
+    </div>
+    
+    <!-- Small warning text -->
+    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #ff6b6b; font-style: italic;">It's astounding. Time is fleeting. Madness takes its toll.</div>
+</div>
+
+
+           
+ 
+            <section class="hero-description">
+                <div class="hero-info">
+                    <h2>The Mission</h2>
+                    <p>
+                        HERO is more than just a token - it's a community of 100 dedicated individuals committed to pioneering the future of the Kaspa ecosystem.
+                    </p>
+                    <p>
+                        Each HERO receives exactly 1% of the total token supply (1B HERO tokens), creating perfect equality among all participants from day one.
+                    </p>
+                </div>
+                
+                <div class="hero-info">
+                    <h2>The Movement</h2>
+                    <p>
+                        $HERO represents a new chapter for Kaspa, where true decentralization drives innovation. Every HERO has an equal voice and stake in the community.
+                    </p>
+                    <p>
+                        What each individual does with their HERO tokens is entirely up to them. Join our Discord and Telegram to connect with fellow HEROes.
+                    </p>
+                </div>
+            </section>
+        </main>
+        
+        <div class="kaspa-info">
+            <h3>KASPA BLOCKCHAIN</h3>
+            <p>$HERO is a KRC20 token built on Kaspa, the fastest, open-source, decentralized & fully scalable Layer-1 blockchain, implementing the GHOSTDAG protocol. Total supply: 100 billion HERO tokens distributed equally among 100 individuals (1% reserved for development).</p>
+        </div>
+        
+        <footer>
+            <div class="disclaimer">
+                $HERO is a meme token with no intrinsic value and no expectation of return. This is not financial advice. Participate at your own risk.
+            </div>
+            <div class="social-links" style="margin-top: 1.5rem;">
+                <a href="#" style="color: var(--teal); margin: 0 1rem; text-decoration: none;">Discord</a>
+                <a href="#" style="color: var(--teal); margin: 0 1rem; text-decoration: none;">Telegram</a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Countries Tooltip (Will be positioned via JS) -->
+    <div class="countries-tooltip" style="display: none;"></div>
+    
+    <!-- Hero Application Modal -->
+    <div id="hero-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            
+            <!-- Initial Screen -->
+            <div id="initial-screen" class="form-screen active">
+                <h3>Become a HERO</h3>
+                <p style="text-align: center; margin-bottom: 2rem;">Are you ready to join the mightiest team of superheroes in the universe?</p>
+                <div class="button-group">
+                    <button id="start-application" class="submit-btn">Start Application</button>
+                </div>
+            </div>
+            
+            <!-- Screen 1: Name and Age -->
+            <div id="screen1" class="form-screen">
+                <div class="hero-kid">  <img src="hero-logo-md.png" alt="Hero Logo"></div>
+                <h3>Step 1: Hero Identity</h3>
+                <div class="input-group">
+                    <label for="screen-name">Screen Name:</label>
+                    <input type="text" id="screen-name" placeholder="Enter your superhero name" required>
+                </div>
+                <div class="input-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" min="1" max="120" placeholder="How old are you" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Enter your email" required> 
+                </div>
+
+                <div class="button-group">
+                    <button id="next1">Next</button>
+                </div>
+            </div>
+            
+            <!-- Screen 2: Country and Kaspa Address -->
+            <div id="screen2" class="form-screen">
+                <div class="hero-kid">  <img src="hero-logo-md.png" alt="Hero Logo"></div>
+                <h3>Step 2: Hero Base</h3>
+                <div class="input-group">
+                    <label for="country">Country:</label>
+                    <select id="country" required>
+                        <option value="">Select Country</option>
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Bahamas">Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Canada">Canada</option>
+                        <option value="China">China</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Korea, South">Korea, South</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States">United States</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Vietnam">Vietnam</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="kaspa-address">Kaspa Wallet Address:</label>
+                    <input type="text" id="kaspa-address" placeholder="kaspa:qz..." required>
+                </div>
+                <div class="button-group">
+                    <button class="secondary" id="prev2">Back</button>
+                    <button id="next2">Next</button>
+                </div>
+            </div>
+            
+            <!-- Screen 3: Introduction Text -->
+            <div id="screen3" class="form-screen">
+                <div class="hero-kid">  <img src="hero-logo-md.png" alt="Hero Logo"></div>
+                <h3>Step 3: Hero Introduction</h3>
+                <div class="input-group">
+                    <label for="introduction">Tell us about your superpowers:</label>
+                    <textarea id="introduction" placeholder="What makes you a super hero? What are your special powers?"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="secondary" id="prev3">Back</button>
+                    <button id="skip-submit">Skip Intro & Submit</button>
+                    <button id="submit-application" class="submit-btn">Submit Application</button>
+                </div>
+            </div>
+            
+            <!-- Success Screen -->
+            <div id="success-screen" class="form-screen">
+                <div class="hero-kid"></div>
+                <h3>Application Received!</h3>
+                <div class="success-message">Welcome to the League of Heroes!</div>
+                <p style="text-align: center; margin-bottom: 1.5rem;">Your superhero application has been submitted. The Council of Heroes will review your powers and contact you soon!</p>
+                <div class="button-group">
+                    <button id="close-success" class="submit-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/script.js"></script>
+</body>
+</html>
