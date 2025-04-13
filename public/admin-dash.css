@@ -76,6 +76,8 @@ th {
   letter-spacing: 0.5px;
   border-bottom: 1px solid #49EACB;
   border-right: 1px solid #2c5364;
+  white-space: normal;           
+  max-width: 200px;              
 }
 
 th:last-child {
@@ -86,6 +88,9 @@ td {
   padding: 1rem;
   border-bottom: 1px solid #444;
   border-right: 1px solid #2c5364;
+  word-break: break-word;  
+  white-space: normal;
+  max-width: 200px;
 }
 
 td:last-child {
@@ -175,12 +180,22 @@ button:hover {
 
 #modal-content .field {
   margin-bottom: 1rem;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.4;
 }
 
 #modal-content .field label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 0.25rem;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #49EACB;
+}
+
+#modal-address,
+#modal-about {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 #modal-content .field span {

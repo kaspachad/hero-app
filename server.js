@@ -19,6 +19,11 @@ app.use('/api/admin', adminRoutes);
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  res.setHeader('ngrok-skip-browser-warning', 'true');
+  next();
+});
+
 // Initialize the database on startup
 db.initDatabase().catch(console.error);
 
