@@ -59,6 +59,21 @@ async function initDatabase() {
   }
 }
 
+// get current application for admin panel
+async function getApplicants(offset = 0, limit = 10) {
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM applications ORDER BY timestamp DESC LIMIT ? OFFSET ?',
+      [limit, offset]
+    );
+    return rows;
+  } catch (error) {
+    console.error('Error fetching applications:', error);
+    return [];
+  }
+}
+
+
 // Get current stats
 async function getStats() {
   try {
@@ -163,5 +178,6 @@ module.exports = {
   initDatabase,
   getStats,
   saveApplication,
+  getApplicants,
   getDistinctCountries  
 };

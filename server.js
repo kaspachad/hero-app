@@ -175,7 +175,7 @@ app.post('/api/admin/login', async (req, res) => {
 app.get('/api/admin/stats', authenticateToken, async (req, res) => {
     try {
         // Use the function from database.js to get dashboard stats
-        const stats = await db.getDashboardStats();
+        const stats = await db.getStats();
         res.json(stats);
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);
