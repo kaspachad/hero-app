@@ -1089,4 +1089,22 @@ footer {
   }
 }
 
+.hero-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem; /* spacing between image and text */
+  flex-wrap: wrap; /* allows wrapping on small screens */
+}
+
+.hero-title-wrapper img.hero-logo-inline {
+  height: 240px;
+  width: 240px;
+}
+
+@media (max-width: 600px) {
+  .hero-title-wrapper {
+    flex-direction: column;
+  }
+}
 
