@@ -83,17 +83,47 @@ app.get('/api/countries', async (req, res) => {
 app.post('/api/submit-application', async (req, res) => {
   try {
     const formData = req.body;
+    //console.log('Received form data:', formData);
     
     // Add timestamp to the data
     formData.timestamp = new Date().toISOString();
     
-    // Simple validation
-    if (!formData.screenname || !formData.email || !formData.country || !formData['kaspa-address']) {
-      return res.status(400).json({ success: false, message: 'All fields are required' });
+    // Simple validation - check for required fields using the names from the client
+    // Note that we're checking for kaspaAddress which is the field name sent from the client
+    if (!formData.screenname || !formData.email || !formData.country || !formData.kaspaAddress) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'All fields are required' 
+      });
     }
     
+    // Age validation
+    if (formData.age) {
+      const age = parseInt(formData.age);
+      if (isNaN(age) || age < 18 || age > 120) {
+        return res.status(400).json({
+          success: false,
+          message: 'Age must be between 18 and 120'
+        });
+      }
+    }
+    
+    // Prepare data for database
+    // Important: Transform kaspaAddress to kaspa-address for the database function
+    const applicationData = {
+      screenname: formData.screenname,
+      email: formData.email,
+      country: formData.country,
+      'kaspa-address': formData.kaspaAddress, // Transform the field name to match database expectations
+      age: formData.age ? parseInt(formData.age) : null,
+      socialMedia: formData.socialMedia || '',
+      introduction: formData.introduction || ''
+    };
+    
+    //console.log('Prepared application data for DB:', applicationData);
+    
     // Save to database
-    const dbResult = await db.saveApplication(formData);
+    const dbResult = await db.saveApplication(applicationData);
     
     if (!dbResult.success) {
       return res.status(500).json({ success: false, message: 'Database error: ' + dbResult.error });
@@ -109,7 +139,7 @@ app.post('/api/submit-application', async (req, res) => {
     }
     
     const filePath = path.join(dataDir, fileName);
-    fs.writeFileSync(filePath, JSON.stringify(formData, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(applicationData, null, 2));
     
     // Get updated stats
     const updatedStats = await db.getStats();

@@ -131,19 +131,76 @@ async function updateStatsWithNewApplication(country) {
   }
 }
 
+// fetch applications for admin panel
+async function getApplicants(offset = 0, limit = 10) {
+  try {
+    console.log(`📦 DB Query → LIMIT ${limit} OFFSET ${offset}`);
+    
+    // Check if social_media column exists in applications table
+    const connection = await pool.getConnection();
+    
+    const [columns] = await connection.query(`
+      SHOW COLUMNS FROM applications LIKE 'social_media'
+    `);
+    
+    // If social_media column doesn't exist, add it
+    if (columns.length === 0) {
+      console.log('Adding social_media column to applications table');
+      await connection.query(`
+        ALTER TABLE applications ADD COLUMN social_media VARCHAR(255) DEFAULT NULL
+      `);
+    }
+    
+    connection.release();
+    
+    // Now fetch applications including social_media field
+    const [rows] = await pool.query(
+      'SELECT id, screenname, email, country, kaspa_address, age, about, social_media, timestamp FROM applications ORDER BY timestamp DESC LIMIT ? OFFSET ?',
+      [limit, offset]
+    );
+    
+    console.log(`📄 DB returned ${rows.length} rows`);
+    return rows;
+  } catch (error) {
+    console.error('❌ DB Error in getApplicants:', error);
+    return [];
+  }
+}
+
+
 // Save application to database
 async function saveApplication(application) {
   try {
-    // Insert application
+    // First, check if social_media column exists
+    const connection = await pool.getConnection();
+    
+    // Check if social_media column exists in applications table
+    const [columns] = await connection.query(`
+      SHOW COLUMNS FROM applications LIKE 'social_media'
+    `);
+    
+    // If social_media column doesn't exist, add it
+    if (columns.length === 0) {
+      console.log('Adding social_media column to applications table');
+      await connection.query(`
+        ALTER TABLE applications ADD COLUMN social_media VARCHAR(255) DEFAULT NULL
+      `);
+    }
+    
+    connection.release();
+    
+    // Now insert with social media field
     const result = await pool.query(
-      `INSERT INTO applications (screenname, email, country, kaspa_address, age, about) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO applications 
+       (screenname, email, country, kaspa_address, age, social_media, about) 
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         application.screenname, 
         application.email, 
         application.country, 
         application['kaspa-address'],
         application.age || null,
+        application.socialMedia || null, // Store the social media value
         application.introduction || null
       ]
     );
