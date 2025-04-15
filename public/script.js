@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize countdown timer
     initCountdown();
-
+    
     // Initialize timeline animation
     initTimelineAnimation();
     
@@ -234,8 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const demoStats = {
             success: true,
             stats: {
-                heroes_enlisted: 23,
-                spots_remaining: 77,
+                heroes_enlisted: 3,
+                spots_remaining: 97,
                 countries: 12,
                 tokens_per_hero: '1B'
             }
@@ -356,150 +356,229 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Submit application function
-    function submitApplication() {
-        // Validate all inputs
-        const screenName = document.getElementById('screen-name').value;
-        const age = document.getElementById('age').value;
-        const email = document.getElementById('email').value;
-        const country = document.getElementById('country').value;
-        const kaspaAddress = document.getElementById('kaspa-address').value;
-        const agreeTerms = document.getElementById('agree-terms').checked;
+   
+// Add this to your submitApplication function
+function submitApplication() {
+    // Get form values
+    const screenName = document.getElementById('screen-name').value;
+    const birthdateValue = document.getElementById('birthdate').value;
+    const email = document.getElementById('email').value;
+    const country = document.getElementById('country').value;
+    const kaspaAddress = document.getElementById('kaspa-address').value;
+    const socialMedia = document.getElementById('social-media').value;
+    const agreeTerms = document.getElementById('agree-terms').checked;
+    
+    // Basic validation
+    const requiredFields = [
+        { id: 'screen-name', name: 'Screen Name' },
+        { id: 'birthdate', name: 'Birth Date' },
+        { id: 'email', name: 'Email' },
+        { id: 'country', name: 'Country' },
+        { id: 'kaspa-address', name: 'Kaspa Wallet Address' },
+        { id: 'social-media', name: 'Social Media' }
+    ];
+    
+    let emptyFields = [];
+    let hasErrors = false;
+    
+    requiredFields.forEach(field => {
+        const element = document.getElementById(field.id);
+        const value = element.value.trim();
         
-        // Basic validation
-        if (!screenName || !age || !email || !country || !kaspaAddress) {
-            alert('Please fill out all required fields!');
-            return;
-        }
-        
-        // Specifically check for terms agreement
-        if (!agreeTerms) {
-            alert('You must acknowledge the terms to proceed.');
-            // Highlight the checkbox to draw attention
-            document.getElementById('agree-terms').parentElement.classList.add('highlight-required');
+        if (!value) {
+            emptyFields.push(field.name);
+            element.classList.add('error-field');
             setTimeout(() => {
-                document.getElementById('agree-terms').parentElement.classList.remove('highlight-required');
-            }, 2000);
+                element.classList.remove('error-field');
+            }, 3000);
+            hasErrors = true;
+        }
+    });
+    
+    if (emptyFields.length > 0) {
+        alert(`Please fill out all required fields: ${emptyFields.join(', ')}`);
+        return;
+    }
+    
+    // For the HTML5 date input
+    let birthdate, age;
+    
+    if (document.getElementById('birthdate').type === 'date') {
+        // HTML5 date input
+        birthdate = new Date(birthdateValue);
+        
+        const today = new Date();
+        age = today.getFullYear() - birthdate.getFullYear();
+        const monthDiff = today.getMonth() - birthdate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+            age--;
+        }
+    } else {
+        // Text input with MM/DD/YYYY format
+        const parts = birthdateValue.split('/');
+        if (parts.length !== 3) {
+            alert('Please enter a valid birth date in MM/DD/YYYY format');
+            document.getElementById('birthdate').classList.add('error-field');
+            setTimeout(() => {
+                document.getElementById('birthdate').classList.remove('error-field');
+            }, 3000);
             return;
         }
         
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address!');
+        const month = parseInt(parts[0]) - 1; // JS months are 0-indexed
+        const day = parseInt(parts[1]);
+        const year = parseInt(parts[2]);
+        
+        birthdate = new Date(year, month, day);
+        
+        // Check if date is valid
+        if (isNaN(birthdate.getTime())) {
+            alert('Please enter a valid birth date');
+            document.getElementById('birthdate').classList.add('error-field');
+            setTimeout(() => {
+                document.getElementById('birthdate').classList.remove('error-field');
+            }, 3000);
             return;
         }
         
-        // Get form data
-        const formData = {
-            screenname: screenName,
-            age: age,
-            country: country,
-            email: email,
-            'kaspa-address': kaspaAddress,
-            introduction: document.getElementById('introduction').value
-        };
+        // Calculate age
+        const today = new Date();
+        age = today.getFullYear() - birthdate.getFullYear();
+        const monthDiff = today.getMonth() - birthdate.getMonth();
         
-        // Show loading state
-        const originalBtnText = submitButton.textContent;
-        submitButton.textContent = 'Submitting...';
-        submitButton.disabled = true;
-        
-        // Submit form data to the server
-        fetch('/api/submit-application', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Reset button state
-                submitButton.textContent = originalBtnText;
-                submitButton.disabled = false;
-                
-                // Show success screen
-                showScreen(successScreen);
-                
-                // Update stats with new values from the response
-                if (data.stats) {
-                    updateStatsDisplay(data.stats);
-                } else {
-                    // If no stats in the response, manually increment counters
-                    const currentStats = {
-                        heroes_enlisted: parseInt(heroesEnlistedEl.textContent),
-                        spots_remaining: parseInt(spotsRemainingEl.textContent),
-                        countries: parseInt(countriesEl.textContent),
-                        tokens_per_hero: tokensPerHeroEl.textContent
-                    };
-                    
-                    // Increment heroes and decrement spots
-                    currentStats.heroes_enlisted += 1;
-                    currentStats.spots_remaining -= 1;
-                    
-                    // Randomly increment countries (for demo purposes)
-                    if (Math.random() > 0.7) {
-                        currentStats.countries += 1;
-                    }
-                    
-                    updateStatsDisplay(currentStats);
-                }
-                
-                // Create and display thank you banner on main page
-                if (!document.querySelector('.thank-you-banner')) {
-                    const thankYouBanner = document.createElement('div');
-                    thankYouBanner.className = 'thank-you-banner';
-                    thankYouBanner.innerHTML = 'Thank you for applying to the Kaspa League of Heroes, an introduction email will be sent shortly.';
-                    
-                    // Insert banner after the join button
-                    const ctaButtons = document.querySelector('.cta-buttons');
-                    ctaButtons.parentNode.insertBefore(thankYouBanner, ctaButtons.nextSibling);
-                    
-                    // Disable the join button
-                    joinBtn.classList.add('disabled');
-                    joinBtn.style.pointerEvents = 'none';
-                    joinBtn.style.opacity = '0.6';
-                }
-            } else {
-                // Show error message
-                alert(`Error: ${data.message || 'Failed to submit your application. Please try again.'}`);
-                
-                // Reset button state
-                submitButton.textContent = originalBtnText;
-                submitButton.disabled = false;
-            }
-        })
-        .catch(error => {
-            console.error('Error submitting form:', error);
-            alert('An error occurred. Please try again later.');
-            
-            // Reset button state
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+            age--;
+        }
+    }
+    
+    // Validate minimum age (18)
+    if (age < 18) {
+        alert('You must be at least 18 years old to apply');
+        document.getElementById('birthdate').classList.add('error-field');
+        setTimeout(() => {
+            document.getElementById('birthdate').classList.remove('error-field');
+        }, 3000);
+        return;
+    }
+    
+    // Check terms agreement
+    if (!agreeTerms) {
+        alert('You must acknowledge the terms to proceed');
+        document.getElementById('agree-terms').parentElement.classList.add('highlight-required');
+        setTimeout(() => {
+            document.getElementById('agree-terms').parentElement.classList.remove('highlight-required');
+        }, 2000);
+        return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        document.getElementById('email').classList.add('error-field');
+        setTimeout(() => {
+            document.getElementById('email').classList.remove('error-field');
+        }, 3000);
+        return;
+    }
+    
+    // Prepare form data - only send the calculated age to the server
+    const formData = {
+        screenname: screenName,
+        age: age, // Send calculated age based on birth date
+        email: email,
+        country: country,
+        kaspaAddress: kaspaAddress,
+        socialMedia: socialMedia,
+        introduction: document.getElementById('introduction').value
+    };
+    
+    // Show loading state
+    const originalBtnText = submitButton.textContent;
+    submitButton.textContent = 'Submitting...';
+    submitButton.disabled = true;
+    
+    // Submit form data to the server - this uses your existing endpoint
+    fetch('/api/submit-application', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Your existing success handling code
+        if (data.success) {
             submitButton.textContent = originalBtnText;
             submitButton.disabled = false;
-            
-            // For demo purposes, show success anyway
             showScreen(successScreen);
             
-            // Create thank you banner (for demo)
+            if (data.stats) {
+                updateStatsDisplay(data.stats);
+            } else {
+                const currentStats = {
+                    heroes_enlisted: parseInt(heroesEnlistedEl.textContent),
+                    spots_remaining: parseInt(spotsRemainingEl.textContent),
+                    countries: parseInt(countriesEl.textContent),
+                    tokens_per_hero: tokensPerHeroEl.textContent
+                };
+                
+                currentStats.heroes_enlisted += 1;
+                currentStats.spots_remaining -= 1;
+                
+                if (Math.random() > 0.7) {
+                    currentStats.countries += 1;
+                }
+                
+                updateStatsDisplay(currentStats);
+            }
+            
             if (!document.querySelector('.thank-you-banner')) {
                 const thankYouBanner = document.createElement('div');
                 thankYouBanner.className = 'thank-you-banner';
                 thankYouBanner.innerHTML = 'Thank you for applying to the Kaspa League of Heroes, an introduction email will be sent shortly.';
                 
-                // Insert banner after the join button
                 const ctaButtons = document.querySelector('.cta-buttons');
                 ctaButtons.parentNode.insertBefore(thankYouBanner, ctaButtons.nextSibling);
                 
-                // Disable the join button
                 joinBtn.classList.add('disabled');
                 joinBtn.style.pointerEvents = 'none';
                 joinBtn.style.opacity = '0.6';
             }
-        });
-    }
-    
+        } else {
+            alert(`Error: ${data.message || 'Failed to submit your application. Please try again.'}`);
+            submitButton.textContent = originalBtnText;
+            submitButton.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again later.');
+        
+        submitButton.textContent = originalBtnText;
+        submitButton.disabled = false;
+        
+        // Demo fallback
+        showScreen(successScreen);
+        
+        if (!document.querySelector('.thank-you-banner')) {
+            const thankYouBanner = document.createElement('div');
+            thankYouBanner.className = 'thank-you-banner';
+            thankYouBanner.innerHTML = 'Thank you for applying to the Kaspa League of Heroes, an introduction email will be sent shortly.';
+            
+            const ctaButtons = document.querySelector('.cta-buttons');
+            ctaButtons.parentNode.insertBefore(thankYouBanner, ctaButtons.nextSibling);
+            
+            joinBtn.classList.add('disabled');
+            joinBtn.style.pointerEvents = 'none';
+            joinBtn.style.opacity = '0.6';
+        }
+    });
+}   
+
+////////////////////////////// 
     // Submit with intro
     submitButton.addEventListener('click', function() {
         submitApplication();
@@ -509,10 +588,11 @@ document.addEventListener('DOMContentLoaded', function() {
     closeSuccessButton.addEventListener('click', function() {
         // Clear all form fields for a fresh start
         document.getElementById('screen-name').value = '';
-        document.getElementById('age').value = '';
+        //document.getElementById('bithdate').value = '';
         document.getElementById('country').value = '';
         document.getElementById('email').value = '';
         document.getElementById('kaspa-address').value = '';
+        document.getElementById('social-media').value = '';
         document.getElementById('introduction').value = '';
         
         // Reset checkbox
@@ -524,6 +604,9 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.classList.remove('active');
     });
 });
+
+
+
 
 /* Add animation class to timeline boxes */
 document.addEventListener('DOMContentLoaded', function() {

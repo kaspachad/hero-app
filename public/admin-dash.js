@@ -49,7 +49,7 @@ async function fetchApplications(page) {
   tbody.innerHTML = '';
 
   if (!data.applications || data.applications.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8">No applications found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9">No applications found.</td></tr>';
     return;
   }
 
@@ -60,6 +60,7 @@ async function fetchApplications(page) {
       <td>${app.email}</td>
       <td>${app.country}</td>
       <td>${app.age ?? ''}</td>
+      <td>${app.social_media || ''}</td>
       <td>${app.kaspa_address}</td>
       <td>${app.about || ''}</td>
       <td>${new Date(app.timestamp).toLocaleString()}</td>
@@ -78,6 +79,7 @@ async function fetchApplications(page) {
       document.getElementById('modal-email').textContent = app.email;
       document.getElementById('modal-country').textContent = app.country;
       document.getElementById('modal-age').textContent = app.age ?? '';
+      document.getElementById('modal-social-media').textContent = app.social_media || '';
       document.getElementById('modal-address').textContent = app.kaspa_address;
       document.getElementById('modal-about').textContent = app.about || '';
       document.getElementById('modal-timestamp').textContent = new Date(app.timestamp).toLocaleString();
@@ -124,7 +126,6 @@ function downloadCSV() {
       alert("Error downloading CSV.");
     });
 }
-
 
 async function approveApp(id) {
   const res = await fetch(`/api/admin/approve/${id}`, {

@@ -29,9 +29,9 @@
       </div>
     </section>
 
-<div style="text-align: right; margin-bottom: 1rem;">
-  <button onclick="downloadCSV()" style="background-color: #49EACB; color: black;">Export CSV</button>
-</div>
+    <div style="text-align: right; margin-bottom: 1rem;">
+      <button onclick="downloadCSV()" style="background-color: #49EACB; color: black;">Export CSV</button>
+    </div>
 
     <section>
       <h2>Applicant Submissions</h2>
@@ -43,6 +43,7 @@
             <th>Email</th>
             <th>Country</th>
             <th>Age</th>
+            <th>Social Media</th>
             <th>Kaspa Address</th>
             <th>About</th>
             <th>Submitted At</th>
@@ -63,25 +64,25 @@
   </div>
 
   <!-- Applicant Detail Modal -->
-<div id="applicant-modal">
-  <div id="modal-content">
-    <h3>Applicant Details</h3>
-    <div class="field"><label>Screen Name:</label><span id="modal-screenname"></span></div>
-    <div class="field"><label>Email:</label><span id="modal-email"></span></div>
-    <div class="field"><label>Country:</label><span id="modal-country"></span></div>
-    <div class="field"><label>Age:</label><span id="modal-age"></span></div>
-    <div class="field"><label>Kaspa Address:</label><span id="modal-address"></span></div>
-    <div class="field"><label>About:</label><span id="modal-about"></span></div>
-    <div class="field"><label>Submitted At:</label><span id="modal-timestamp"></span></div>
-    <div id="modal-buttons">
-      <button onclick="approveApp(currentModalApplicantId)">Approve</button>
-      <button onclick="denyApp(currentModalApplicantId)">Deny</button>
-      <button onclick="closeModal()">Cancel</button>
+  <div id="applicant-modal">
+    <div id="modal-content">
+      <h3>Applicant Details</h3>
+      <div class="field"><label>Screen Name:</label><span id="modal-screenname"></span></div>
+      <div class="field"><label>Email:</label><span id="modal-email"></span></div>
+      <div class="field"><label>Country:</label><span id="modal-country"></span></div>
+      <div class="field"><label>Age:</label><span id="modal-age"></span></div>
+      <div class="field"><label>Social Media:</label><span id="modal-social-media"></span></div>
+      <div class="field"><label>Kaspa Address:</label><span id="modal-address"></span></div>
+      <div class="field"><label>About:</label><span id="modal-about"></span></div>
+      <div class="field"><label>Submitted At:</label><span id="modal-timestamp"></span></div>
+      <div id="modal-buttons">
+        <button onclick="approveApp(currentModalApplicantId)">Approve</button>
+        <button onclick="denyApp(currentModalApplicantId)">Deny</button>
+        <button onclick="closeModal()">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
 
   <script src="/admin-dash.js"></script>
 </body>
 </html>
-

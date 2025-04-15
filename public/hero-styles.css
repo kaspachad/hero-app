@@ -1108,3 +1108,15 @@ footer {
   }
 }
 
+.error-field {
+    border: 2px solid #ff3860 !important;
+    animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
