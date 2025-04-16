@@ -134,10 +134,14 @@ h1 {
 }
 
 .hero-description {
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin: 3rem 0;
+    align-items: start;
+    padding: 0 1rem;
 }
+
 
 .hero-info {
     flex: 1;
@@ -1069,7 +1073,14 @@ footer {
   background-color: rgba(0, 198, 192, 0.1);
   box-shadow: 0 0 20px rgba(0, 198, 192, 0.1);
   transition: all 0.3s ease;
+
+  /* Add these to center and equalize layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
+
 
 .grid-item:hover {
   transform: translateY(-5px);
@@ -1120,3 +1131,14 @@ footer {
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
 }
+
+.section-block {
+    margin: 4rem 0;
+    padding: 0 1rem;
+}
+
+.hero-grid {
+    margin: 3rem 0; /* already set */
+}
+
+

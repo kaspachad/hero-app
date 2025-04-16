@@ -1,45 +1,37 @@
-<!html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HERO on Kaspa</title>
-    <link rel="stylesheet" href="/hero-styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HERO on Kaspa</title>
+  <link rel="stylesheet" href="/hero-styles.css">
 </head>
 <body>
-    <div class="circuit-bg"></div>
-    <div class="teal-glow glow-1"></div>
-    <div class="teal-glow glow-2"></div>
-    
-    <div class="container">
-        <header>
-            <div class="logo-container">
-                <div class="logo-img"><img src="hero-logo.png" height="80" width="80"></div>
-                <div class="logo-text">HERO</div>
+  <div class="circuit-bg"></div>
+  <div class="teal-glow glow-1"></div>
+  <div class="teal-glow glow-2"></div>
 
-            </div>
+  <div class="container">
+    <header class="section-block">
+      <div class="logo-container">
+        <div class="logo-img"><img src="hero-logo.png" height="80" width="80"></div>
+        <div class="logo-text">HERO</div>
+      </div>
+    </header>
 
-        </header>
+    <main>
+      <section class="hero-section section-block">
+        <h1>JOIN THE LEAGUE OF HEROES</h1>
+        <div class="tagline">
+          A community of 100 individuals on the kaspa blockchain. Each member receives exactly 1% of the total $HERO supply (1B tokens each). Truly decentralized. Truly fair.<br><br>
+          Is it a social experiment? A movement? A new kind of community? Join us, and help shape what it becomes.
+        </div>
+        <div class="cta-buttons">
+          <a href="#" class="cta-btn" id="join-league-btn">Join the League</a>
+        </div>
+      </section>
 
-        <main>
-
-            <section class="hero-section">
-                <h1>JOIN THE LEAGUE OF HEROES</h1>
-
-
-                <div class="tagline">
-                    A community of 100 individuals on the kaspa blockchain. Each member receives exactly 1% of the total $HERO supply (1B tokens each). Truly decentralized. Truly fair.<BR><BR>
-Is it a social experiment? A movement? A new kind of community? Join us, and help shape what it becomes.
-
-    <div class="cta-buttons">
-       <a href="#" class="cta-btn" id="join-league-btn">Join the League</a>
-    </div>
-
-</section>
-
-<!--h3 class="section-title">Current Stats</h3-->
-<div class="hero-grid">
+   <section class="hero-grid section-block">
   <!-- Stats Boxes -->
   <div class="grid-item counter-item">
     <div class="counter-value" id="heroes-enlisted">5</div>
@@ -78,12 +70,10 @@ Is it a social experiment? A movement? A new kind of community? Join us, and hel
     <div class="timeline-date">TBD</div>
     <div class="timeline-count">Public Launch</div>
     <div class="timeline-desc">Stay Tuned</div>
-  </div>
+  </div>   
+ </section>
 
-</div>
-
-            <section class="hero-description">
-
+      <section class="hero-description section-block">
                 <div class="hero-info">
                     <!--h2>The Mission</h2-->
                 <img src="mission.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;">
@@ -107,15 +97,16 @@ Is it a social experiment? A movement? A new kind of community? Join us, and hel
                     </p>
                 </div>
 
-            </section>
-        </main>
-        
-<div class="kaspa-info">
-      <h3>KASPA BLOCKCHAIN</h3>
-      <p>$HERO is a KRC20 token built on Kaspa, the fastest, open-source, decentralized & fully scalable Layer-1 blockchain, implementing the GHOSTDAG protocol. Total supply: 100 billion $HERO tokens, distributed equally among 100 individuals.</p>
-        </div>
-    
-        <footer>
+            </section>      </section>
+
+      <section class="kaspa-info section-block">
+        <h3>KASPA BLOCKCHAIN</h3>
+        <p>$HERO is a KRC20 token built on Kaspa, the fastest, open-source, decentralized & fully scalable Layer-1 blockchain, implementing the GHOSTDAG protocol. Total supply: 100 billion $HERO tokens, distributed equally among 100 individuals.</p>
+      </section>
+    </main>
+
+    <footer class="section-block">
+      <div class="countdown-container">
           <!-- Countdown Timer Section -->
 <div style="background: rgba(240, 242, 245, 0.95); border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; border: 1px solid rgba(200, 205, 215, 0.3); box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
     <!-- Subtle gradient effect -->
@@ -136,184 +127,107 @@ Is it a social experiment? A movement? A new kind of community? Join us, and hel
         <span id="countdown-seconds" style="color: #fff; background: linear-gradient(to bottom, #3B82F6 0%, #2563EB 100%); padding: 0.5rem 0.8rem; border-radius: 5px; min-width: 3rem; display: inline-block; border: 1px solid #60A5FA; box-shadow: 0 0 10px rgba(59, 130, 246, 0.15), inset 0 0 15px rgba(0, 0, 0, 0.1); text-shadow: 0 0 5px rgba(0, 0, 0, 0.2); font-family: monospace; animation: blink 5s ease-in-out infinite; animation-delay: 1.5s;">00</span>
         <div style="color: #64748B; font-weight: 400; font-size: 1.4rem; display: inline-block; margin: 0 0.2rem;">s</div>
     </div></div>
+      </div>
+      <div class="disclaimer">
+        HERO is a KRC20 token with no intrinsic value and no expectation of return.
+      </div>
+    </footer>
+  </div>
 
+  <div class="countries-tooltip" style="display: none;"></div>
 
-            <div class="disclaimer">
-                $HERO is a meme token with no intrinsic value and no expectation of return. This is not financial advice. Participate at your own risk.
-            </div>
-        </footer>
-    </div>
-    
-    <!-- Countries Tooltip (Will be positioned via JS) -->
-    <div class="countries-tooltip" style="display: none;"></div>
-    
-<!-- Hero Application Modal -->
-<div id="hero-modal" class="modal">
+  <!-- Hero Application Modal -->
+  <div id="hero-modal" class="modal">
     <div class="modal-content">
-        <button class="close-modal" id="close-modal">&times;</button>
-        
-        <!-- Initial Screen -->
-        <div id="initial-screen" class="form-screen active">
-            <h3>Become a HERO</h3>
-            <p style="text-align: left; margin-bottom: 2rem;">
-                <strong>Hero League Membership Selection</strong><br><br>
-                This is more than a token drop - it's a social experiment in radical equality. 
-                100 applicants will be selected to join our collective governance initiative.<br><br>
-                Each member will receive a HERO Wallet, full platform access, and equal voting rights in all governance decisions. 
-                This project operates on a foundation of true equality - all members share identical rights within our decentralized structure.<br><br>
-                <strong>Note:</strong> We reserve the right to disqualify applications based on regulatory requirements, including age verification, geographical restrictions, or evidence of inauthentic participation. 
-                If applications exceed the capacity of 100 members, final selection will be conducted via a transparent process.
-            </p>
-            <div class="button-group">
-                <button id="start-application" class="submit-btn">Start Application</button>
-            </div>
+      <button class="close-modal" id="close-modal">&times;</button>
+
+      <!-- Initial Screen -->
+      <div id="initial-screen" class="form-screen active">
+        <h3>Become a HERO</h3>
+        <p style="text-align: left; margin-bottom: 2rem;">
+          <strong>Hero League Membership Selection</strong><br><br>
+          This is more than a token drop - it's a social experiment in radical equality.
+          100 applicants will be selected to join our collective governance initiative.<br><br>
+          Each member will receive a HERO Wallet, full platform access, and equal voting rights in all governance decisions.
+          This project operates on a foundation of true equality - all members share identical rights within our decentralized structure.<br><br>
+          <strong>Note:</strong> We reserve the right to disqualify applications based on regulatory requirements, including age verification, geographical restrictions, or evidence of inauthentic participation.
+          If applications exceed the capacity of 100 members, final selection will be conducted via a transparent process.
+        </p>
+        <div class="button-group">
+          <button id="start-application" class="submit-btn">Start Application</button>
         </div>
-        
-        <!-- Unified Application Form -->
-        <div id="unified-form" class="form-screen">
-            <div class="hero-kid"><img src="hero-logo-md.png" alt="Hero Logo"></div>
-            <h3>Hero Application Form</h3>
-            
-            <div class="form-section">
-                <div class="input-group">
-                    <label for="screen-name">Screen Name:</label>
-                    <input type="text" id="screen-name" placeholder="Enter your name" required>
-            </div>
+      </div>
 
+      <!-- Unified Application Form -->
+      <div id="unified-form" class="form-screen">
+        <div class="hero-kid"><img src="hero-logo-md.png" alt="Hero Logo"></div>
+        <h3>Hero Application Form</h3>
 
-<div class="input-group">
-    <label for="birthdate">Birth Date:</label>
-    <input type="date" id="birthdate" style="background-color: #1a2c32; color: white;" 
-           min="1904-01-01" max="2007-01-01" required>
-</div>
-
-                <div class="input-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" placeholder="Enter your email" required> 
-                </div>
-            </div>
-            
-            <div class="form-section">
-                <div class="input-group">
-                    <label for="country">Country:</label>
-                    <select id="country" style="background-color: #1a2c32;" required>
-                        <option value="">Select Country</option>
-                        <option value="Afghanistan">Afghanistan</option>
-                        <option value="Albania">Albania</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="Andorra">Andorra</option>
-                        <option value="Angola">Angola</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="Armenia">Armenia</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Austria">Austria</option>
-                        <option value="Azerbaijan">Azerbaijan</option>
-                        <option value="Bahamas">Bahamas</option>
-                        <option value="Bahrain">Bahrain</option>
-                        <option value="Bangladesh">Bangladesh</option>
-                        <option value="Barbados">Barbados</option>
-                        <option value="Belarus">Belarus</option>
-                        <option value="Belgium">Belgium</option>
-                        <option value="Belize">Belize</option>
-                        <option value="Brazil">Brazil</option>
-                        <option value="Bulgaria">Bulgaria</option>
-                        <option value="Canada">Canada</option>
-                        <option value="China">China</option>
-                        <option value="Colombia">Colombia</option>
-                        <option value="Czech Republic">Czech Republic</option>
-                        <option value="Denmark">Denmark</option>
-                        <option value="Egypt">Egypt</option>
-                        <option value="Estonia">Estonia</option>
-                        <option value="Finland">Finland</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Greece">Greece</option>
-                        <option value="Hungary">Hungary</option>
-                        <option value="Iceland">Iceland</option>
-                        <option value="India">India</option>
-                        <option value="Indonesia">Indonesia</option>
-                        <option value="Iran">Iran</option>
-                        <option value="Iraq">Iraq</option>
-                        <option value="Ireland">Ireland</option>
-                        <option value="Israel">Israel</option>
-                        <option value="Italy">Italy</option>
-                        <option value="Jamaica">Jamaica</option>
-                        <option value="Japan">Japan</option>
-                        <option value="Kenya">Kenya</option>
-                        <option value="Korea, South">Korea, South</option>
-                        <option value="Kuwait">Kuwait</option>
-                        <option value="Malaysia">Malaysia</option>
-                        <option value="Mexico">Mexico</option>
-                        <option value="Netherlands">Netherlands</option>
-                        <option value="New Zealand">New Zealand</option>
-                        <option value="Nigeria">Nigeria</option>
-                        <option value="Norway">Norway</option>
-                        <option value="Pakistan">Pakistan</option>
-                        <option value="Poland">Poland</option>
-                        <option value="Portugal">Portugal</option>
-                        <option value="Qatar">Qatar</option>
-                        <option value="Romania">Romania</option>
-                        <option value="Russia">Russia</option>
-                        <option value="Saudi Arabia">Saudi Arabia</option>
-                        <option value="Singapore">Singapore</option>
-                        <option value="South Africa">South Africa</option>
-                        <option value="Spain">Spain</option>
-                        <option value="Sweden">Sweden</option>
-                        <option value="Switzerland">Switzerland</option>
-                        <option value="Thailand">Thailand</option>
-                        <option value="Turkey">Turkey</option>
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="United Arab Emirates">United Arab Emirates</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="United States">United States</option>
-                        <option value="Venezuela">Venezuela</option>
-                        <option value="Vietnam">Vietnam</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="kaspa-address">Kaspa Wallet Address:</label>
-                    <input type="text" id="kaspa-address" placeholder="kaspa:qz..." required>
-                </div>
-                <div class="input-group">
-                    <label for="social-media">Social Media (choose one):</label>
-                    <input type="text" id="social-media" placeholder="x.com/username or facebook.com/profile" required>
-                </div>
-
-            </div>
-            
-            <div class="form-section">
-
-                <div class="input-group">
-                    <label for="introduction">Tell us about yourelf</label>
-                    <textarea id="introduction" placeholder="Anything you want to share"></textarea>
-                </div>
-                <div class="input-group checkbox-group">
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="agree-terms">
-                        <label for="agree-terms">I acknowledge that $HERO is a meme token with no intrinsic value and no expectation of return.</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="button-group">
-                <button class="secondary" id="back-to-intro">Back</button>
-                <button id="submit-application" class="submit-btn">Submit Application</button>
-            </div>
+        <div class="form-section">
+          <div class="input-group">
+            <label for="screen-name">Screen Name:</label>
+            <input type="text" id="screen-name" placeholder="Enter your name" required>
+          </div>
+          <div class="input-group">
+            <label for="birthdate">Birth Date:</label>
+            <input type="date" id="birthdate" style="background-color: #1a2c32; color: white;" min="1904-01-01" max="2007-01-01" required>
+          </div>
+          <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+          </div>
         </div>
-        
-        <!-- Success Screen -->
-        <div id="success-screen" class="form-screen">
-            <div class="hero-kid"><img src="hero-logo-md.png" alt="Hero Logo"></div>
-            <h3>Application Received!</h3>
-            <div class="success-message">Welcome to the League of Heroes!</div>
-            <p style="text-align: center; margin-bottom: 1.5rem;">Your superhero application has been submitted. The Council of Heroes will review your powers and contact you soon!</p>
-            <div class="button-group">
-                <button id="close-success" class="submit-btn">Close</button>
-            </div>
+
+        <div class="form-section">
+          <div class="input-group">
+            <label for="country">Country:</label>
+            <select id="country" style="background-color: #1a2c32;" required>
+              <option value="">Select Country</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="kaspa-address">Kaspa Wallet Address:</label>
+            <input type="text" id="kaspa-address" placeholder="kaspa:qz..." required>
+          </div>
+          <div class="input-group">
+            <label for="social-media">Social Media (choose one):</label>
+            <input type="text" id="social-media" placeholder="x.com/username or facebook.com/profile" required>
+          </div>
         </div>
+
+        <div class="form-section">
+          <div class="input-group">
+            <label for="introduction">Tell us about yourself</label>
+            <textarea id="introduction" placeholder="Anything you want to share"></textarea>
+          </div>
+          <div class="input-group checkbox-group">
+            <div class="checkbox-container">
+              <input type="checkbox" id="agree-terms">
+              <label for="agree-terms">I acknowledge that HERO is a meme token with no intrinsic value and no expectation of return.</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="secondary" id="back-to-intro">Back</button>
+          <button id="submit-application" class="submit-btn">Submit Application</button>
+        </div>
+      </div>
+
+      <!-- Success Screen -->
+      <div id="success-screen" class="form-screen">
+        <div class="hero-kid"><img src="hero-logo-md.png" alt="Hero Logo"></div>
+        <h3>Application Received!</h3>
+        <div class="success-message">Welcome to the League of Heroes!</div>
+        <p style="text-align: center; margin-bottom: 1.5rem;">Your superhero application has been submitted.</p>
+        <div class="button-group">
+          <button id="close-success" class="submit-btn">Close</button>
+        </div>
+      </div>
     </div>
-</div>
-	
-    <script src="/script.js"></script>
+  </div>
+
+  <script src="/script.js"></script>
 </body>
 </html>
+

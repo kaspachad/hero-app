@@ -1,3 +1,37 @@
+
+async function loadCountryList() {
+  const countrySelect = document.getElementById('country');
+  if (!countrySelect) return;
+
+  try {
+    const response = await fetch('https://restcountries.com/v3.1/all');
+    const countries = await response.json();
+
+    // Defensive check
+    if (!Array.isArray(countries)) {
+      throw new Error("REST Countries API did not return an array");
+    }
+
+    // Sort by country name (case-insensitive)
+    countries.sort((a, b) =>
+      a.name.common.localeCompare(b.name.common, undefined, { sensitivity: 'base' })
+    );
+
+    countrySelect.innerHTML = '<option value="">Select Country</option>';
+    countries.forEach(c => {
+      const name = c.name.common;
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      countrySelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error('Could not load countries:', err);
+    countrySelect.innerHTML = '<option value="">Could not load countries</option>';
+  }
+}
+
+
 // Animate timeline boxes when they come into view
 function initTimelineAnimation() {
     const timelineBoxes = document.querySelectorAll('.timeline-box');
@@ -36,6 +70,11 @@ function initTimelineAnimation() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+	
+	// start populating the countries
+	loadCountryList();
+	
     // Modal elements
     const joinBtn = document.getElementById('join-league-btn');
     const modal = document.getElementById('hero-modal');
@@ -58,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const countriesEl = document.getElementById('countries');
     const tokensPerHeroEl = document.getElementById('tokens-per-hero');
     
+	
     // Initialize countdown timer
     initCountdown();
     
@@ -603,18 +643,14 @@ function submitApplication() {
         // Close the modal
         modal.classList.remove('active');
     });
-});
 
-
-
-
-/* Add animation class to timeline boxes */
-document.addEventListener('DOMContentLoaded', function() {
-    // Add this to handle the animation of timeline boxes
+    /* Add animation class to timeline boxes */
     const timelineBoxes = document.querySelectorAll('.timeline-box');
     timelineBoxes.forEach((box, index) => {
         setTimeout(() => {
             box.classList.add('active');
         }, index * 300);
     });
+
 });
+
