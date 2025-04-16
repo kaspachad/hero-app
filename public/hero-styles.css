@@ -65,7 +65,7 @@ header {
     width: 80px;
     height: 80px;
     margin-right: 1rem;
-    background: var(--teal);
+    /* background: var(--teal); */
     border-radius: 50%;
 }
 
