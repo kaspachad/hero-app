@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken } = require('../middleware/auth');
-const { getApplicants, getDashboardStats } = require('../database');
+const { getApplicants, getStats } = require('../database');
 
 // Get dashboard stats
 router.get('/stats', authenticateToken, async (req, res) => {
   try {
-    const stats = await getDashboardStats();
+    const stats = await getStats();
     res.json(stats);
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
     res.status(500).json({ message: 'Failed to fetch stats' });
   }
 });
+
+
 
 // Get applicants with pagination and search
 router.get('/applicants', authenticateToken, async (req, res) => {
