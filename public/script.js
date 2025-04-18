@@ -1,4 +1,3 @@
-
 async function loadCountryList() {
   const countrySelect = document.getElementById('country');
   if (!countrySelect) return;
@@ -31,6 +30,201 @@ async function loadCountryList() {
   }
 }
 
+// Unified tooltip system
+const tooltipSystem = {
+    tooltip: null,
+    
+    init() {
+        // Create tooltip element if it doesn't exist
+        if (!this.tooltip) {
+            this.tooltip = document.createElement('div');
+            this.tooltip.className = 'tooltip';
+            this.tooltip.style.display = 'none';
+            document.body.appendChild(this.tooltip);
+            
+            // Close tooltip when clicking outside
+            document.addEventListener('click', (e) => {
+                if (this.tooltip.style.display === 'block' && 
+                    !this.tooltip.contains(e.target) && 
+                    !e.target.closest('[data-tooltip]')) {
+                    this.hide();
+                }
+            });
+        }
+        
+        // Add click handlers to all tooltip triggers
+        document.querySelectorAll('[data-tooltip]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.show(el, e);
+            });
+        });
+    },
+    
+    show(element, event) {
+        // Get tooltip content from data attributes
+        const title = element.getAttribute('data-tooltip-title') || '';
+        const content = element.getAttribute('data-tooltip-content') || '';
+        const type = element.getAttribute('data-tooltip-type') || 'text';
+        
+        // Generate content based on tooltip type
+        let contentHTML = '';
+        
+        if (type === 'countries' && element.hasAttribute('data-countries')) {
+            try {
+                const countriesList = JSON.parse(element.getAttribute('data-countries'));
+                if (countriesList.length > 0) {
+                    contentHTML = '<div class="tooltip-list">';
+                    countriesList.forEach(country => {
+                        contentHTML += `<div class="tooltip-item">${country}</div>`;
+                    });
+                    contentHTML += '</div>';
+                }
+            } catch (error) {
+                console.error('Error parsing countries data:', error);
+                contentHTML = '<div class="tooltip-content">Error loading countries data</div>';
+            }
+        } else {
+            contentHTML = `<div class="tooltip-content">${content}</div>`;
+        }
+        
+        // Set tooltip content with title and close button
+        this.tooltip.innerHTML = `
+            <div class="tooltip-close">×</div>
+            <div class="tooltip-title">${title}</div>
+            ${contentHTML}
+        `;
+        
+        // Position tooltip near the element
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        // Initial positioning
+        this.tooltip.style.left = (rect.left + scrollLeft) + 'px';
+        this.tooltip.style.top = (rect.bottom + scrollTop + 10) + 'px';
+        
+        // Show tooltip
+        this.tooltip.style.display = 'block';
+        
+        // Adjust position if needed to keep on screen
+        setTimeout(() => {
+            const tooltipRect = this.tooltip.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Adjust horizontal position
+            if (tooltipRect.right > viewportWidth) {
+                this.tooltip.style.left = (viewportWidth - tooltipRect.width - 20) + 'px';
+            }
+            
+            // Adjust vertical position if it goes below viewport
+            if (tooltipRect.bottom > viewportHeight) {
+                // Position above the element if it fits, otherwise position at top of viewport
+                if (rect.top > tooltipRect.height + 20) {
+                    this.tooltip.style.top = (rect.top + scrollTop - tooltipRect.height - 10) + 'px';
+                } else {
+                    this.tooltip.style.top = scrollTop + 20 + 'px';
+                }
+            }
+        }, 0);
+        
+        // Add click handler to close button
+        this.tooltip.querySelector('.tooltip-close').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.hide();
+        });
+    },
+    
+    hide() {
+        if (this.tooltip) {
+            this.tooltip.style.display = 'none';
+        }
+    }
+};
+
+// Info Modal System
+const modalSystem = {
+    modals: {},
+    
+    init() {
+        // Create each modal based on data attributes
+        document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
+            const modalId = trigger.getAttribute('data-modal-trigger');
+            const modalTitle = trigger.getAttribute('data-modal-title') || '';
+            const modalContent = document.getElementById(modalId + '-content');
+            
+            if (!modalContent) {
+                console.error(`Modal content element #${modalId}-content not found`);
+                return;
+            }
+            
+            // Create modal if it doesn't exist
+            if (!this.modals[modalId]) {
+                // Create modal container
+                const modal = document.createElement('div');
+                modal.id = modalId;
+                modal.className = 'info-modal';
+                
+                // Create modal content
+                modal.innerHTML = `
+                    <div class="info-modal-content">
+                        <button class="info-modal-close">&times;</button>
+                        <div class="info-modal-title">${modalTitle}</div>
+                        <div class="info-modal-body"></div>
+                    </div>
+                `;
+                
+                // Clone the content
+                const contentClone = modalContent.cloneNode(true);
+                contentClone.style.display = 'block';
+                
+                // Add the content to the modal
+                modal.querySelector('.info-modal-body').appendChild(contentClone);
+                
+                // Add modal to DOM
+                document.body.appendChild(modal);
+                
+                // Store modal reference
+                this.modals[modalId] = modal;
+                
+                // Close button event
+                modal.querySelector('.info-modal-close').addEventListener('click', () => {
+                    this.hide(modalId);
+                });
+                
+                // Click outside to close
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        this.hide(modalId);
+                    }
+                });
+            }
+            
+            // Add click event to trigger
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.show(modalId);
+            });
+        });
+    },
+    
+    show(modalId) {
+        if (this.modals[modalId]) {
+            this.modals[modalId].classList.add('active');
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+    },
+    
+    hide(modalId) {
+        if (this.modals[modalId]) {
+            this.modals[modalId].classList.remove('active');
+            // Restore body scrolling
+            document.body.style.overflow = '';
+        }
+    }
+};
 
 // Animate timeline boxes when they come into view
 function initTimelineAnimation() {
@@ -70,11 +264,9 @@ function initTimelineAnimation() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
-	
-	// start populating the countries
-	loadCountryList();
-	
+    // Start populating the countries
+    loadCountryList();
+    
     // Modal elements
     const joinBtn = document.getElementById('join-league-btn');
     const modal = document.getElementById('hero-modal');
@@ -97,15 +289,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const countriesEl = document.getElementById('countries');
     const tokensPerHeroEl = document.getElementById('tokens-per-hero');
     
-	
+    // Initialize the tooltip system
+    tooltipSystem.init();
+    
+    // Initialize the modal system
+    modalSystem.init();
+    
     // Initialize countdown timer
     initCountdown();
     
     // Initialize timeline animation
     initTimelineAnimation();
-    
-    // Initialize tooltips (replaces initCountriesTooltip)
-    initTooltips();
     
     // Fetch initial stats
     fetchStats();
@@ -133,132 +327,37 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
     }
     
-    function initTooltips() {
+    // Setup tooltip triggers for stats
+    function setupTooltipTriggers() {
         // Spots Remaining tooltip
         const spotsCounter = document.querySelector('.counter-item:nth-child(2)');
         if (spotsCounter) {
+            spotsCounter.setAttribute('data-tooltip', 'true');
             spotsCounter.setAttribute('data-tooltip-title', 'Spots Remaining');
-            spotsCounter.setAttribute('data-tooltip-type', 'spots');
+            spotsCounter.setAttribute('data-tooltip-type', 'text');
             spotsCounter.setAttribute('data-tooltip-content', 'If we receive less than 100 applications, then every member will get 1B $HERO. If we get more than 100 applications, then the 100 members will be selected by a fair and transparent raffle.');
-            spotsCounter.addEventListener('click', showTooltip);
         }
         
         // Countries tooltip
         const countriesCounter = document.querySelector('.counter-item:nth-child(3)');
         if (countriesCounter) {
+            countriesCounter.setAttribute('data-tooltip', 'true');
             countriesCounter.setAttribute('data-tooltip-title', 'Countries');
             countriesCounter.setAttribute('data-tooltip-type', 'countries');
-            countriesCounter.addEventListener('click', showTooltip);
         }
         
         // Tokens Per Hero tooltip
         const tokensCounter = document.querySelector('.counter-item:nth-child(4)');
         if (tokensCounter) {
+            tokensCounter.setAttribute('data-tooltip', 'true');
             tokensCounter.setAttribute('data-tooltip-title', 'Tokens Per Hero');
-            tokensCounter.setAttribute('data-tooltip-type', 'tokens');
+            tokensCounter.setAttribute('data-tooltip-type', 'text');
             tokensCounter.setAttribute('data-tooltip-content', 'Each member will receive 1B out of 100B Total Supply.');
-            tokensCounter.addEventListener('click', showTooltip);
-        }
-        
-        // Document click handler to close tooltip when clicking outside
-        document.addEventListener('click', function(e) {
-            const tooltip = document.querySelector('.tooltip');
-            if (tooltip && 
-                tooltip.style.display === 'block' && 
-                !tooltip.contains(e.target) && 
-                !e.target.closest('[data-tooltip-type]')) {
-                hideTooltip();
-            }
-        });
-    }
-
-    function showTooltip(e) {
-        e.stopPropagation();
-        
-        const element = e.currentTarget;
-        const tooltipType = element.getAttribute('data-tooltip-type');
-        const tooltipTitle = element.getAttribute('data-tooltip-title');
-        
-        // Create tooltip if it doesn't exist
-        let tooltip = document.querySelector('.tooltip');
-        if (!tooltip) {
-            tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            document.body.appendChild(tooltip);
-        }
-        
-        // Generate content based on tooltip type
-        let content = '';
-        
-        if (tooltipType === 'countries') {
-            const countriesListJSON = element.getAttribute('data-countries');
-            if (!countriesListJSON) return;
-            
-            try {
-                const countriesList = JSON.parse(countriesListJSON);
-                if (countriesList.length === 0) return;
-                
-                content = '<div class="tooltip-list">';
-                countriesList.forEach(country => {
-                    content += `<div class="tooltip-item">${country}</div>`;
-                });
-                content += '</div>';
-            } catch (error) {
-                console.error('Error parsing countries data:', error);
-                return;
-            }
-        } 
-        else if (tooltipType === 'spots' || tooltipType === 'tokens') {
-            // Get content from data attribute
-            const tooltipContent = element.getAttribute('data-tooltip-content');
-            content = `<div class="tooltip-text">${tooltipContent}</div>`;
-        }
-        
-        // Set tooltip content with title and close button
-        tooltip.innerHTML = `
-            <div class="tooltip-close">×</div>
-            <div class="tooltip-title">${tooltipTitle}</div>
-            ${content}
-        `;
-        
-        // Position tooltip at mouse position
-        tooltip.style.left = e.pageX + 'px';
-        tooltip.style.top = e.pageY + 'px';
-        
-        // Make sure tooltip doesn't go off screen
-        setTimeout(() => {
-            const rect = tooltip.getBoundingClientRect();
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-            
-            if (rect.right > viewportWidth) {
-                tooltip.style.left = (viewportWidth - rect.width - 20) + 'px';
-            }
-            
-            if (rect.bottom > viewportHeight) {
-                tooltip.style.top = (viewportHeight - rect.height - 20) + 'px';
-            }
-        }, 0);
-        
-        // Show tooltip
-        tooltip.style.display = 'block';
-        
-        // Add click handler to close button
-        const closeButton = tooltip.querySelector('.tooltip-close');
-        if (closeButton) {
-            closeButton.addEventListener('click', function(e) {
-                e.stopPropagation();
-                hideTooltip();
-            });
         }
     }
-
-    function hideTooltip() {
-        const tooltip = document.querySelector('.tooltip');
-        if (tooltip) {
-            tooltip.style.display = 'none';
-        }
-    }
+    
+    // Call setupTooltipTriggers after DOM is loaded
+    setupTooltipTriggers();
 
     // Update countries list data attribute
     function updateCountriesList(countriesList) {
@@ -396,184 +495,211 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-   
-// Add this to your submitApplication function
-function submitApplication() {
-    // Get form values
-    const screenName = document.getElementById('screen-name').value;
-    const birthdateValue = document.getElementById('birthdate').value;
-    const email = document.getElementById('email').value;
-    const country = document.getElementById('country').value;
-    const kaspaAddress = document.getElementById('kaspa-address').value;
-    const socialMedia = document.getElementById('social-media').value;
-    const agreeTerms = document.getElementById('agree-terms').checked;
-    
-    // Basic validation
-    const requiredFields = [
-        { id: 'screen-name', name: 'Screen Name' },
-        { id: 'birthdate', name: 'Birth Date' },
-        { id: 'email', name: 'Email' },
-        { id: 'country', name: 'Country' },
-        { id: 'kaspa-address', name: 'Kaspa Wallet Address' },
-        { id: 'social-media', name: 'Social Media' }
-    ];
-    
-    let emptyFields = [];
-    let hasErrors = false;
-    
-    requiredFields.forEach(field => {
-        const element = document.getElementById(field.id);
-        const value = element.value.trim();
+    // Add this to your submitApplication function
+    function submitApplication() {
+        // Get form values
+        const screenName = document.getElementById('screen-name').value;
+        const birthdateValue = document.getElementById('birthdate').value;
+        const email = document.getElementById('email').value;
+        const country = document.getElementById('country').value;
+        const kaspaAddress = document.getElementById('kaspa-address').value;
+        const socialMedia = document.getElementById('social-media').value;
+        const agreeTerms = document.getElementById('agree-terms').checked;
         
-        if (!value) {
-            emptyFields.push(field.name);
-            element.classList.add('error-field');
-            setTimeout(() => {
-                element.classList.remove('error-field');
-            }, 3000);
-            hasErrors = true;
-        }
-    });
-    
-    if (emptyFields.length > 0) {
-        alert(`Please fill out all required fields: ${emptyFields.join(', ')}`);
-        return;
-    }
-    
-    // For the HTML5 date input
-    let birthdate, age;
-    
-    if (document.getElementById('birthdate').type === 'date') {
-        // HTML5 date input
-        birthdate = new Date(birthdateValue);
+        // Basic validation
+        const requiredFields = [
+            { id: 'screen-name', name: 'Screen Name' },
+            { id: 'birthdate', name: 'Birth Date' },
+            { id: 'email', name: 'Email' },
+            { id: 'country', name: 'Country' },
+            { id: 'kaspa-address', name: 'Kaspa Wallet Address' },
+            { id: 'social-media', name: 'Social Media' }
+        ];
         
-        const today = new Date();
-        age = today.getFullYear() - birthdate.getFullYear();
-        const monthDiff = today.getMonth() - birthdate.getMonth();
+        let emptyFields = [];
+        let hasErrors = false;
         
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
-            age--;
-        }
-    } else {
-        // Text input with MM/DD/YYYY format
-        const parts = birthdateValue.split('/');
-        if (parts.length !== 3) {
-            alert('Please enter a valid birth date in MM/DD/YYYY format');
-            document.getElementById('birthdate').classList.add('error-field');
-            setTimeout(() => {
-                document.getElementById('birthdate').classList.remove('error-field');
-            }, 3000);
-            return;
-        }
-        
-        const month = parseInt(parts[0]) - 1; // JS months are 0-indexed
-        const day = parseInt(parts[1]);
-        const year = parseInt(parts[2]);
-        
-        birthdate = new Date(year, month, day);
-        
-        // Check if date is valid
-        if (isNaN(birthdate.getTime())) {
-            alert('Please enter a valid birth date');
-            document.getElementById('birthdate').classList.add('error-field');
-            setTimeout(() => {
-                document.getElementById('birthdate').classList.remove('error-field');
-            }, 3000);
-            return;
-        }
-        
-        // Calculate age
-        const today = new Date();
-        age = today.getFullYear() - birthdate.getFullYear();
-        const monthDiff = today.getMonth() - birthdate.getMonth();
-        
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
-            age--;
-        }
-    }
-    
-    // Validate minimum age (18)
-    if (age < 18) {
-        alert('You must be at least 18 years old to apply');
-        document.getElementById('birthdate').classList.add('error-field');
-        setTimeout(() => {
-            document.getElementById('birthdate').classList.remove('error-field');
-        }, 3000);
-        return;
-    }
-    
-    // Check terms agreement
-    if (!agreeTerms) {
-        alert('You must acknowledge the terms to proceed');
-        document.getElementById('agree-terms').parentElement.classList.add('highlight-required');
-        setTimeout(() => {
-            document.getElementById('agree-terms').parentElement.classList.remove('highlight-required');
-        }, 2000);
-        return;
-    }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
-        document.getElementById('email').classList.add('error-field');
-        setTimeout(() => {
-            document.getElementById('email').classList.remove('error-field');
-        }, 3000);
-        return;
-    }
-    
-    // Prepare form data - only send the calculated age to the server
-    const formData = {
-        screenname: screenName,
-        age: age, // Send calculated age based on birth date
-        email: email,
-        country: country,
-        kaspaAddress: kaspaAddress,
-        socialMedia: socialMedia,
-        introduction: document.getElementById('introduction').value
-    };
-    
-    // Show loading state
-    const originalBtnText = submitButton.textContent;
-    submitButton.textContent = 'Submitting...';
-    submitButton.disabled = true;
-    
-    // Submit form data to the server - this uses your existing endpoint
-    fetch('/api/submit-application', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Your existing success handling code
-        if (data.success) {
-            submitButton.textContent = originalBtnText;
-            submitButton.disabled = false;
-            showScreen(successScreen);
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field.id);
+            const value = element.value.trim();
             
-            if (data.stats) {
-                updateStatsDisplay(data.stats);
-            } else {
-                const currentStats = {
-                    heroes_enlisted: parseInt(heroesEnlistedEl.textContent),
-                    spots_remaining: parseInt(spotsRemainingEl.textContent),
-                    countries: parseInt(countriesEl.textContent),
-                    tokens_per_hero: tokensPerHeroEl.textContent
-                };
+            if (!value) {
+                emptyFields.push(field.name);
+                element.classList.add('error-field');
+                setTimeout(() => {
+                    element.classList.remove('error-field');
+                }, 3000);
+                hasErrors = true;
+            }
+        });
+        
+        if (emptyFields.length > 0) {
+            alert(`Please fill out all required fields: ${emptyFields.join(', ')}`);
+            return;
+        }
+        
+        // For the HTML5 date input
+        let birthdate, age;
+        
+        if (document.getElementById('birthdate').type === 'date') {
+            // HTML5 date input
+            birthdate = new Date(birthdateValue);
+            
+            const today = new Date();
+            age = today.getFullYear() - birthdate.getFullYear();
+            const monthDiff = today.getMonth() - birthdate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+        } else {
+            // Text input with MM/DD/YYYY format
+            const parts = birthdateValue.split('/');
+            if (parts.length !== 3) {
+                alert('Please enter a valid birth date in MM/DD/YYYY format');
+                document.getElementById('birthdate').classList.add('error-field');
+                setTimeout(() => {
+                    document.getElementById('birthdate').classList.remove('error-field');
+                }, 3000);
+                return;
+            }
+            
+            const month = parseInt(parts[0]) - 1; // JS months are 0-indexed
+            const day = parseInt(parts[1]);
+            const year = parseInt(parts[2]);
+            
+            birthdate = new Date(year, month, day);
+            
+            // Check if date is valid
+            if (isNaN(birthdate.getTime())) {
+                alert('Please enter a valid birth date');
+                document.getElementById('birthdate').classList.add('error-field');
+                setTimeout(() => {
+                    document.getElementById('birthdate').classList.remove('error-field');
+                }, 3000);
+                return;
+            }
+            
+            // Calculate age
+            const today = new Date();
+            age = today.getFullYear() - birthdate.getFullYear();
+            const monthDiff = today.getMonth() - birthdate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+        }
+        
+        // Validate minimum age (18)
+        if (age < 18) {
+            alert('You must be at least 18 years old to apply');
+            document.getElementById('birthdate').classList.add('error-field');
+            setTimeout(() => {
+                document.getElementById('birthdate').classList.remove('error-field');
+            }, 3000);
+            return;
+        }
+        
+        // Check terms agreement
+        if (!agreeTerms) {
+            alert('You must acknowledge the terms to proceed');
+            document.getElementById('agree-terms').parentElement.classList.add('highlight-required');
+            setTimeout(() => {
+                document.getElementById('agree-terms').parentElement.classList.remove('highlight-required');
+            }, 2000);
+            return;
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address');
+            document.getElementById('email').classList.add('error-field');
+            setTimeout(() => {
+                document.getElementById('email').classList.remove('error-field');
+            }, 3000);
+            return;
+        }
+        
+        // Prepare form data - only send the calculated age to the server
+        const formData = {
+            screenname: screenName,
+            age: age, // Send calculated age based on birth date
+            email: email,
+            country: country,
+            kaspaAddress: kaspaAddress,
+            socialMedia: socialMedia,
+            introduction: document.getElementById('introduction').value
+        };
+        
+        // Show loading state
+        const originalBtnText = submitButton.textContent;
+        submitButton.textContent = 'Submitting...';
+        submitButton.disabled = true;
+        
+        // Submit form data to the server - this uses your existing endpoint
+        fetch('/api/submit-application', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Your existing success handling code
+            if (data.success) {
+                submitButton.textContent = originalBtnText;
+                submitButton.disabled = false;
+                showScreen(successScreen);
                 
-                currentStats.heroes_enlisted += 1;
-                currentStats.spots_remaining -= 1;
-                
-                if (Math.random() > 0.7) {
-                    currentStats.countries += 1;
+                if (data.stats) {
+                    updateStatsDisplay(data.stats);
+                } else {
+                    const currentStats = {
+                        heroes_enlisted: parseInt(heroesEnlistedEl.textContent),
+                        spots_remaining: parseInt(spotsRemainingEl.textContent),
+                        countries: parseInt(countriesEl.textContent),
+                        tokens_per_hero: tokensPerHeroEl.textContent
+                    };
+                    
+                    currentStats.heroes_enlisted += 1;
+                    currentStats.spots_remaining -= 1;
+                    
+                    if (Math.random() > 0.7) {
+                        currentStats.countries += 1;
+                    }
+                    
+                    updateStatsDisplay(currentStats);
                 }
                 
-                updateStatsDisplay(currentStats);
+                if (!document.querySelector('.thank-you-banner')) {
+                    const thankYouBanner = document.createElement('div');
+                    thankYouBanner.className = 'thank-you-banner';
+                    thankYouBanner.innerHTML = 'Thank you for applying to the Kaspa League of Heroes, an introduction email will be sent shortly.';
+                    
+                    const ctaButtons = document.querySelector('.cta-buttons');
+                    ctaButtons.parentNode.insertBefore(thankYouBanner, ctaButtons.nextSibling);
+                    
+                    joinBtn.classList.add('disabled');
+                    joinBtn.style.pointerEvents = 'none';
+                    joinBtn.style.opacity = '0.6';
+                }
+            } else {
+                alert(`Error: ${data.message || 'Failed to submit your application. Please try again.'}`);
+                submitButton.textContent = originalBtnText;
+                submitButton.disabled = false;
             }
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            alert('An error occurred. Please try again later.');
+            
+            submitButton.textContent = originalBtnText;
+            submitButton.disabled = false;
+            
+            // Demo fallback
+            showScreen(successScreen);
             
             if (!document.querySelector('.thank-you-banner')) {
                 const thankYouBanner = document.createElement('div');
@@ -587,38 +713,9 @@ function submitApplication() {
                 joinBtn.style.pointerEvents = 'none';
                 joinBtn.style.opacity = '0.6';
             }
-        } else {
-            alert(`Error: ${data.message || 'Failed to submit your application. Please try again.'}`);
-            submitButton.textContent = originalBtnText;
-            submitButton.disabled = false;
-        }
-    })
-    .catch(error => {
-        console.error('Error submitting form:', error);
-        alert('An error occurred. Please try again later.');
-        
-        submitButton.textContent = originalBtnText;
-        submitButton.disabled = false;
-        
-        // Demo fallback
-        showScreen(successScreen);
-        
-        if (!document.querySelector('.thank-you-banner')) {
-            const thankYouBanner = document.createElement('div');
-            thankYouBanner.className = 'thank-you-banner';
-            thankYouBanner.innerHTML = 'Thank you for applying to the Kaspa League of Heroes, an introduction email will be sent shortly.';
-            
-            const ctaButtons = document.querySelector('.cta-buttons');
-            ctaButtons.parentNode.insertBefore(thankYouBanner, ctaButtons.nextSibling);
-            
-            joinBtn.classList.add('disabled');
-            joinBtn.style.pointerEvents = 'none';
-            joinBtn.style.opacity = '0.6';
-        }
-    });
-}   
+        });
+    }   
 
-////////////////////////////// 
     // Submit with intro
     submitButton.addEventListener('click', function() {
         submitApplication();
@@ -651,6 +748,4 @@ function submitApplication() {
             box.classList.add('active');
         }, index * 300);
     });
-
 });
-

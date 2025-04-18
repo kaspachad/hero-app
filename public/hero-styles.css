@@ -753,20 +753,24 @@ footer {
     box-shadow: 0 0 8px rgba(0, 198, 192, 0.3);
 }
 
-/* Generic tooltip styles */
+/* Unified Tooltip Styles - NEW */
 .tooltip {
     position: absolute;
     z-index: 100;
-    background: rgba(18, 18, 24, 0.95);
+    background: rgba(255, 255, 255, 0.95);
+    color: #121212;
     border: 1px solid var(--teal);
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 5px 20px rgba(0, 198, 192, 0.4);
-    width: max-content;
-    max-width: 350px; 
+    width: 320px;
+    max-width: 320px; 
     max-height: 400px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     animation: tooltipFadeIn 0.3s ease-in-out;
+    word-wrap: break-word;
+    word-break: normal;
 }
 
 .tooltip-close {
@@ -782,7 +786,7 @@ footer {
     cursor: pointer;
     border-radius: 50%;
     transition: all 0.2s ease;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -791,19 +795,27 @@ footer {
 
 .tooltip-close:hover {
     background-color: rgba(0, 198, 192, 0.3);
-    color: #fff;
+    color: #121212;
 }
 
 .tooltip-title {
     padding-right: 30px;
     position: relative;
     margin-bottom: 10px;
-    color: var(--bright-teal);
+    color: var(--dark-teal);
     font-size: 1.2rem;
     text-align: center;
     border-bottom: 1px solid rgba(0, 198, 192, 0.3);
     padding-bottom: 0.5rem;
     font-weight: 600;
+}
+
+.tooltip-content {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 100%;
+    padding: 0.5rem;
 }
 
 .tooltip-list {
@@ -817,7 +829,7 @@ footer {
 }
 
 .tooltip-item {
-    color: #fff;
+    color: #333;
     font-size: 0.9rem;
     padding: 0.4rem;
     border-radius: 4px;
@@ -832,21 +844,13 @@ footer {
     box-shadow: 0 0 8px rgba(0, 198, 192, 0.3);
 }
 
-.tooltip-text {
-    color: #fff;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    max-width: 100%;
-    padding: 0.5rem;
-}
-
 /* Add a small hint to indicate clickable elements */
-[data-tooltip-type] {
+[data-tooltip] {
     cursor: pointer;
     position: relative;
 }
 
-[data-tooltip-type]::after {
+[data-tooltip]::after {
     content: "👁️";
     position: absolute;
     top: -5px;
@@ -856,18 +860,122 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-[data-tooltip-type]:hover::after {
+[data-tooltip]:hover::after {
     opacity: 1;
 }
 
-@keyframes tooltipFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+/* Info Modal Styles - NEW */
+.info-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.info-modal.active {
+    display: flex;
+}
+
+.info-modal-content {
+    background: rgba(255, 255, 255, 0.97);
+    color: #121212;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid rgba(0, 198, 192, 0.3);
+    box-shadow: 0 0 30px rgba(0, 198, 192, 0.3);
+    overflow: hidden;
+    margin: 2rem;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.info-modal-content::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(19, 232, 224, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+    z-index: -1;
+    animation: rotate 20s linear infinite;
+}
+
+.info-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--teal);
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.info-modal-close:hover {
+    color: #121212;
+    background: rgba(0, 198, 192, 0.2);
+    transform: rotate(90deg);
+}
+
+.info-modal-title {
+    color: var(--dark-teal);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 198, 192, 0.3);
+}
+
+.info-modal-body {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.info-modal-body h4 {
+    color: var(--dark-teal);
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-modal-body p {
+    margin-bottom: 1rem;
+}
+
+.info-modal-body ul {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .info-modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+        width: 95%;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    
+    .info-modal-title {
+        font-size: 1.5rem;
     }
 }
 
@@ -1006,7 +1114,6 @@ footer {
     word-break: normal;
 }
 
-
 /* Highlight for required checkbox validation */
 .highlight-required {
     animation: pulse-border 1.5s ease;
@@ -1141,4 +1248,49 @@ footer {
     margin: 3rem 0; /* already set */
 }
 
+/* Info Links Navigation - NEW */
+.info-links {
+    display: flex;
+    gap: 20px;
+}
 
+.info-links a {
+    position: relative;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.info-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--teal);
+    transition: width 0.3s ease;
+}
+
+.info-links a:hover {
+    color: var(--bright-teal);
+}
+
+.info-links a:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .info-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .info-links {
+        margin-top: 1rem;
+    }
+}

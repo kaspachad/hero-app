@@ -14,8 +14,15 @@
   <div class="container">
     <header class="section-block">
       <div class="logo-container">
-        <div class="logo-img"><img src="hero-logo.png" height="80" width="80"></div>
+        <div class="logo-img"><img src="hero-logo.png" height="80" width="80" alt="HERO Logo"></div>
         <div class="logo-text">HERO</div>
+      </div>
+      
+      <!-- Info links - NEW -->
+      <div class="info-links" style="display: flex; gap: 20px;">
+        <a href="#" data-modal-trigger="what-is-hero" data-modal-title="What is HERO?" style="color: var(--teal); text-decoration: none; font-weight: 500;">What is HERO?</a>
+        <a href="#" data-modal-trigger="how-it-works" data-modal-title="How it Works" style="color: var(--teal); text-decoration: none; font-weight: 500;">How it Works</a>
+        <a href="#" data-modal-trigger="faq" data-modal-title="Frequently Asked Questions" style="color: var(--teal); text-decoration: none; font-weight: 500;">FAQ</a>
       </div>
     </header>
 
@@ -33,40 +40,40 @@
 
    <section class="hero-grid section-block">
   <!-- Stats Boxes -->
-  <div class="grid-item counter-item">
+  <div class="grid-item counter-item" data-tooltip="true" data-tooltip-title="Heroes Enlisted" data-tooltip-type="text" data-tooltip-content="The total number of heroes who have joined the League of Heroes so far.">
     <div class="counter-value" id="heroes-enlisted">5</div>
     <div class="counter-title">HEROES ENLISTED</div>
   </div>
   
-  <div class="grid-item counter-item">
+  <div class="grid-item counter-item" data-tooltip="true" data-tooltip-title="Spots Remaining" data-tooltip-type="text" data-tooltip-content="If we receive less than 100 applications, then every member will get 1B $HERO. If we get more than 100 applications, then the 100 members will be selected by a fair and transparent raffle.">
     <div class="counter-value" id="spots-remaining">95</div>
     <div class="counter-title">SPOTS REMAINING</div>
   </div>
   
-  <div class="grid-item counter-item">
+  <div class="grid-item counter-item" data-tooltip="true" data-tooltip-title="Countries" data-tooltip-type="countries">
     <div class="counter-value" id="countries">5</div>
     <div class="counter-title">COUNTRIES</div>
   </div>
   
-  <div class="grid-item counter-item">
+  <div class="grid-item counter-item" data-tooltip="true" data-tooltip-title="Tokens Per Hero" data-tooltip-type="text" data-tooltip-content="Each member will receive 1B out of 100B Total Supply.">
     <div class="counter-value" id="tokens-per-hero">1B</div>
     <div class="counter-title">TOKENS PER HERO</div>
   </div>
   
   <!--Timeline Boxes -->
-  <div class="grid-item timeline-box">
+  <div class="grid-item timeline-box" data-tooltip="true" data-tooltip-title="Current Status" data-tooltip-type="text" data-tooltip-content="Currently, all tokens are held in the development wallet until distribution.">
     <div class="timeline-date">Current</div>
     <div class="timeline-count">1 Holder</div>
     <div class="timeline-desc">Development Wallet</div>
   </div>
   
-  <div class="grid-item timeline-box">
+  <div class="grid-item timeline-box" data-tooltip="true" data-tooltip-title="Distribution Date" data-tooltip-type="text" data-tooltip-content="On July 1st, 2025, all 100 selected Heroes will receive their tokens.">
     <div class="timeline-date">July 1st, 2025</div>
     <div class="timeline-count">100 Holders</div>
     <div class="timeline-desc">Hero League Members</div>
   </div>
   
-  <div class="grid-item timeline-box">
+  <div class="grid-item timeline-box" data-tooltip="true" data-tooltip-title="Public Launch" data-tooltip-type="text" data-tooltip-content="After token distribution, a public launch will be planned with input from all Hero League members.">
     <div class="timeline-date">TBD</div>
     <div class="timeline-count">Public Launch</div>
     <div class="timeline-desc">Stay Tuned</div>
@@ -76,7 +83,7 @@
       <section class="hero-description section-block">
                 <div class="hero-info">
                     <!--h2>The Mission</h2-->
-                <img src="mission.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;">
+                <img src="mission.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;" alt="Mission Icon">
 
                     <p>
                         $HERO is more than just a token - it's a community of 100 dedicated individuals committed to pioneering the future of the Kaspa ecosystem.
@@ -88,12 +95,12 @@
                 
                 <div class="hero-info">
                     <!--h2>The Movement</h2-->
-                   <img src="movement.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;">
+                   <img src="movement.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;" alt="Movement Icon">
                     <p>
                         $HERO represents a new chapter for Kaspa, where true decentralization drives innovation. Every Hero League member has an equal voice and stake in the community.
                     </p>
                     <p>
-                        What each individual does with their $HERO tokens is entirely up to them. Membership allows you tojoin our Discord and Telegram to connect with fellow HEROes.
+                        What each individual does with their $HERO tokens is entirely up to them. Membership allows you to join our Discord and Telegram to connect with fellow HEROes.
                     </p>
                 </div>
 
@@ -227,7 +234,54 @@
     </div>
   </div>
 
+  <!-- Hidden content for modals -->
+  <div id="what-is-hero-content" style="display: none;">
+    <p>HERO is a community-driven token on the Kaspa blockchain built around principles of true decentralization and equality.</p>
+    <p>Key features of HERO:</p>
+    <ul>
+      <li>100 billion total supply distributed equally among 100 individuals</li>
+      <li>Each member receives exactly 1% (1 billion HERO tokens)</li>
+      <li>KRC20 token built on the fastest, open-source Layer-1 blockchain</li>
+      <li>Community-focused approach with equal voting rights</li>
+    </ul>
+    <p>HERO represents a new paradigm in token distribution - completely fair from day one with no pre-mine, no developer advantage, and no VIP allocations.</p>
+  </div>
+
+  <div id="how-it-works-content" style="display: none;">
+    <h4>Joining the League</h4>
+    <p>The Hero League is limited to exactly 100 members, each receiving an equal 1% of the total token supply.</p>
+    
+    <h4>Selection Process</h4>
+    <p>Applications are reviewed based on criteria including:</p>
+    <ul>
+      <li>Geographic diversity (limited slots per country)</li>
+      <li>Commitment to the Kaspa ecosystem</li>
+      <li>Community contribution potential</li>
+    </ul>
+    
+    <h4>Timeline</h4>
+    <p>• Current: Application phase open until June 20th, 2025<br>
+    • July 1st, 2025: Token distribution to all 100 Heroes<br>
+    • TBD: Public launch and exchange listings</p>
+  </div>
+
+  <div id="faq-content" style="display: none;">
+    <h4>How many tokens will I receive?</h4>
+    <p>Each Hero receives exactly 1 billion HERO tokens, representing 1% of the total supply.</p>
+    
+    <h4>When will tokens be distributed?</h4>
+    <p>Tokens will be distributed on July 1st, 2025 to all selected members.</p>
+    
+    <h4>What happens if more than 100 people apply?</h4>
+    <p>If applications exceed capacity, final selection will be conducted via a transparent process with preference given to geographic diversity and community engagement potential.</p>
+    
+    <h4>Can I sell my tokens?</h4>
+    <p>As a HERO League member, you have full control over your tokens. There are no restrictions on how you use them.</p>
+    
+    <h4>What blockchain does HERO use?</h4>
+    <p>HERO is a KRC20 token built on Kaspa, the fastest open-source Layer-1 blockchain implementing the GHOSTDAG protocol.</p>
+  </div>
+
   <script src="/script.js"></script>
 </body>
 </html>
-
