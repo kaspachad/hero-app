@@ -1,3 +1,44 @@
+
+// Theme toggling functionality
+const themeToggle = {
+    init() {
+        // Get the toggle button
+        const toggleBtn = document.querySelector('.theme-toggle');
+        if (!toggleBtn) return;
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('hero-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (!prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+        
+        // Add click handler to toggle theme
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Update theme attribute
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Save preference
+            localStorage.setItem('hero-theme', newTheme);
+            
+            // Add a subtle animation
+            toggleBtn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                toggleBtn.style.transform = 'rotate(0)';
+            }, 500);
+        });
+    }
+};
+
+
+// Load country list to popuplate in the join form select box
 async function loadCountryList() {
   const countrySelect = document.getElementById('country');
   if (!countrySelect) return;
@@ -748,4 +789,7 @@ document.addEventListener('DOMContentLoaded', function() {
             box.classList.add('active');
         }, index * 300);
     });
+
+       themeToggle.init();
+
 });
