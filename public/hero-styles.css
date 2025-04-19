@@ -1751,3 +1751,68 @@ footer {
     color: #333;
 }
 
+
+/* Social media container layout */
+.social-media-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+#social-media-type {
+  flex: 0 0 150px;
+  min-width: 150px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2300E0DA' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-color: #1a2c32 !important;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+#social-media-profile {
+  flex: 1;
+}
+
+/* Force both light and dark mode settings explicitly */
+#social-media-type {
+  background-color: rgba(0, 30, 40, 0.7) !important;
+  color: #ffffff !important;
+}
+
+#social-media-type option {
+  background-color: #1a2c32 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #social-media-type {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #333333 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23009E99' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+}
+
+[data-theme="light"] #social-media-type option {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+[data-theme="light"] #social-media-profile {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #333333 !important;
+}
+
+/* Responsive layout for small screens */
+@media (max-width: 480px) {
+  .social-media-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  #social-media-type {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

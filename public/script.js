@@ -1,3 +1,40 @@
+// Handle social media form functionality
+function setupSocialMediaInputs() {
+  const socialMediaType = document.getElementById('social-media-type');
+  const socialMediaProfile = document.getElementById('social-media-profile');
+  const hiddenSocialMedia = document.getElementById('social-media');
+  
+  if (!socialMediaType || !socialMediaProfile || !hiddenSocialMedia) {
+    console.error('Social media form elements not found');
+    return;
+  }
+  
+  // Update the hidden input whenever either select or text input changes
+  function updateHiddenInput() {
+    const type = socialMediaType.value;
+    const profile = socialMediaProfile.value.trim();
+    
+    // Only update if both fields have values
+    if (type && profile) {
+      // Remove '@' or '/' if user added it at the beginning of their username
+      const cleanProfile = profile.startsWith('@') || profile.startsWith('/') 
+        ? profile.substring(1) 
+        : profile;
+      
+      hiddenSocialMedia.value = type + cleanProfile;
+    } else {
+      hiddenSocialMedia.value = '';
+    }
+  }
+  
+  // Add event listeners for both inputs
+  socialMediaType.addEventListener('change', updateHiddenInput);
+  socialMediaProfile.addEventListener('input', updateHiddenInput);
+  
+  // Initialize on page load
+  updateHiddenInput();
+}
+
 // Enhanced Theme toggling functionality
 const themeToggle = {
     init() {
@@ -330,6 +367,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start populating the countries
     loadCountryList();
     
+    // start social media functions
+     setupSocialMediaInputs();
+  
+
 
     // related to Light/Dark toggle
     const style = document.createElement('style');
@@ -590,14 +631,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Basic validation
         const requiredFields = [
-            { id: 'screen-name', name: 'Screen Name' },
-            { id: 'birthdate', name: 'Birth Date' },
-            { id: 'email', name: 'Email' },
-            { id: 'country', name: 'Country' },
-            { id: 'kaspa-address', name: 'Kaspa Wallet Address' },
-            { id: 'social-media', name: 'Social Media' }
-        ];
-        
+	 { id: 'screen-name', name: 'Screen Name' },
+    	 { id: 'birthdate', name: 'Birth Date' },
+    	 { id: 'email', name: 'Email' },
+    	 { id: 'country', name: 'Country' },
+    	 { id: 'kaspa-address', name: 'Kaspa Wallet Address' },
+    	 { id: 'social-media-type', name: 'Social Media Platform' },
+    	 { id: 'social-media-profile', name: 'Social Media Profile' }
+	];
+ 
         let emptyFields = [];
         let hasErrors = false;
         

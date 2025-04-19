@@ -89,8 +89,8 @@
     <div class="timeline-desc">Stay Tuned</div>
   </div>   
  </section>
-
-      <section class="hero-description section-block">
+ 
+ <section class="hero-description section-block">
                 <div class="hero-info">
                     <!--h2>The Mission</h2-->
                 <img src="mission.png" height="240" width="240" style="display: block; margin: 0 auto 1rem;" alt="Mission Icon">
@@ -205,10 +205,24 @@
             <label for="kaspa-address">Kaspa Wallet Address:</label>
             <input type="text" id="kaspa-address" placeholder="kaspa:qz..." required>
           </div>
-          <div class="input-group">
-            <label for="social-media">Social Media (choose one):</label>
-            <input type="text" id="social-media" placeholder="x.com/username or facebook.com/profile" required>
-          </div>
+
+<div class="input-group">
+  <label for="social-media-type">Social Media Platform:</label>
+  <div class="social-media-container">
+    <select id="social-media-type" required>
+      <option value="">Select</option>
+      <option value="facebook.com/">Facebook</option>
+      <option value="x.com/">X.com</option>
+      <option value="instagram.com/">Instagram</option>
+      <option value="reddit.com/u/">Reddit</option>
+      <option value="tiktok.com/@">TikTok</option>
+      <option value="bsky.app/profile/">Bluesky</option>
+    </select>
+    <input type="text" id="social-media-profile" placeholder="Your username/handle" required>
+    <input type="hidden" id="social-media" value="">
+  </div>
+</div>
+
         </div>
 
         <div class="form-section">
@@ -275,6 +289,15 @@
   </div>
 
   <div id="faq-content" style="display: none;">
+   <h4>Does it cost me anything?</h4>
+    <p>There are no costs associated with participating in the HERO League; There is also no promise of reward; The community will decide if and how to monetize the token, or we can send it all to a burn address and go home, nothing lost.</p>
+
+    <h4>Who created Hero?</h4>
+    <p>A guy who likes Kaspa and Democracy and is always looking for new ways to do the old things.</p>
+
+    <h4>Can I sign up Twice?</h4>
+    <p>That would give you DOUBLE the tokens, wouldn't it? We highly recommend to only sign up once, and give other people a fair chance. Hero is about fairness, Game theory, exactly 100 players who can cooperate or sabotage each other, as they see fit. I hope this proves that cooperation can lift everyone's boats, but it can go lord of the flies for all I know.</p>
+
     <h4>How many tokens will I receive?</h4>
     <p>Each Hero receives exactly 1 billion HERO tokens, representing 1% of the total supply.</p>
     
