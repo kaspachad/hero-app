@@ -1,5 +1,4 @@
-
-// Theme toggling functionality
+// Enhanced Theme toggling functionality
 const themeToggle = {
     init() {
         // Get the toggle button
@@ -13,11 +12,15 @@ const themeToggle = {
         // Set initial theme
         if (savedTheme) {
             document.documentElement.setAttribute('data-theme', savedTheme);
+            this.updateToggleIcon(savedTheme);
         } else if (!prefersDark) {
             document.documentElement.setAttribute('data-theme', 'light');
+            this.updateToggleIcon('light');
+        } else {
+            this.updateToggleIcon('dark');
         }
         
-        // Add click handler to toggle theme
+        // Add click handler to toggle theme with improved animation
         toggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -25,18 +28,35 @@ const themeToggle = {
             // Update theme attribute
             document.documentElement.setAttribute('data-theme', newTheme);
             
+            // Update toggle icon
+            this.updateToggleIcon(newTheme);
+            
             // Save preference
             localStorage.setItem('hero-theme', newTheme);
             
             // Add a subtle animation
-            toggleBtn.style.transform = 'rotate(360deg)';
+            toggleBtn.classList.add('rotating');
             setTimeout(() => {
-                toggleBtn.style.transform = 'rotate(0)';
+                toggleBtn.classList.remove('rotating');
             }, 500);
         });
+    },
+    
+// Helper to update the toggle button icon
+    updateToggleIcon(theme) {
+        const toggleBtn = document.querySelector('.theme-toggle');
+        const moonIcon = toggleBtn.querySelector('.moon-icon');
+        const sunIcon = toggleBtn.querySelector('.sun-icon');
+        
+        if (theme === 'light') {
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+        } else {
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        }
     }
 };
-
 
 // Load country list to popuplate in the join form select box
 async function loadCountryList() {
@@ -304,10 +324,31 @@ function initTimelineAnimation() {
     }
 }
 
+
+// ***************************** Main ****************************
 document.addEventListener('DOMContentLoaded', function() {
     // Start populating the countries
     loadCountryList();
     
+
+    // related to Light/Dark toggle
+    const style = document.createElement('style');
+    style.textContent = `
+        .theme-toggle.rotating {
+            transform: rotate(360deg);
+            transition: transform 0.5s ease;
+        }
+        
+        /* Ensure transitions are smooth for theme changes */
+        body, .modal-content, .info-modal-content, .grid-item, .form-section, input, select, textarea, button {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize theme toggle
+    themeToggle.init();
+
     // Modal elements
     const joinBtn = document.getElementById('join-league-btn');
     const modal = document.getElementById('hero-modal');
@@ -789,7 +830,4 @@ document.addEventListener('DOMContentLoaded', function() {
             box.classList.add('active');
         }, index * 300);
     });
-
-       themeToggle.init();
-
 });

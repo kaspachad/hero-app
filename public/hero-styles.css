@@ -15,10 +15,14 @@
     --text-muted: #999999;
     --border-color: rgba(0, 198, 192, 0.3);
     --card-bg: rgba(0, 30, 40, 0.7);
-    --tooltip-bg: rgba(255, 255, 255, 0.95);
-    --tooltip-text: #121212;
+    --tooltip-bg: rgba(20, 30, 40, 0.95);
+    --tooltip-text: #ffffff;
     --modal-bg: rgba(0, 30, 40, 0.9);
     --input-bg: rgba(255, 255, 255, 0.1);
+    --button-text-color: #ffffff;
+    --timeline-text-color: var(--bright-teal);
+    --modal-text-color: #ffffff;
+    --modal-section-bg: rgba(0, 0, 0, 0.3);
 }
 
 /* Light theme colors */
@@ -29,14 +33,19 @@
     --text-primary: #121212;
     --text-secondary: #333333;
     --text-muted: #666666;
-    --border-color: rgba(0, 198, 192, 0.3);
+    --border-color: rgba(0, 198, 192, 0.5); /* Increased opacity for better visibility */
     --card-bg: rgba(255, 255, 255, 0.9);
-    --tooltip-bg: rgba(20, 30, 40, 0.95);
-    --tooltip-text: #ffffff;
+	 --tooltip-bg: rgba(255, 255, 255, 0.95);
+    --tooltip-text: #121212;
     --modal-bg: rgba(255, 255, 255, 0.95);
     --input-bg: rgba(0, 0, 0, 0.05);
+    --button-text-color: #ffffff;
+    --timeline-text-color: #006963; /* Darker teal for better contrast on light background */
+    --modal-text-color: #121212;
+    --modal-section-bg: rgba(240, 240, 240, 0.7);
 }
 
+/* Light theme specific overrides */
 [data-theme="light"] .grid-item {
   background-color: rgba(0, 198, 192, 0.15);
   border: 1px solid rgba(0, 198, 192, 0.4);
@@ -53,6 +62,143 @@
   color: #333333;
 }
 
+[data-theme="light"] .timeline-date,
+[data-theme="light"] .timeline-count {
+  color: var(--timeline-text-color);
+  text-shadow: none;
+}
+
+[data-theme="light"] .cta-btn,
+[data-theme="light"] .submit-btn,
+[data-theme="light"] button:not(.secondary):not(.theme-toggle) {
+  background: linear-gradient(to right, #007974, #00b5b0);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .modal-content,
+[data-theme="light"] .info-modal-content {
+  color: var(--modal-text-color);
+}
+
+[data-theme="light"] .form-section {
+  background: var(--modal-section-bg);
+  border-color: rgba(0, 198, 192, 0.3);
+}
+
+[data-theme="light"] .form-group label, 
+[data-theme="light"] label {
+  color: #333333;
+}
+
+[data-theme="light"] .form-group input, 
+[data-theme="light"] .form-group select, 
+[data-theme="light"] input, 
+[data-theme="light"] textarea, 
+[data-theme="light"] select {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #333333;
+  border-color: rgba(0, 198, 192, 0.4);
+}
+
+[data-theme="light"] .form-group input:focus, 
+[data-theme="light"] .form-group select:focus, 
+[data-theme="light"] input:focus, 
+[data-theme="light"] textarea:focus, 
+[data-theme="light"] select:focus {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: var(--teal);
+}
+
+[data-theme="light"] .checkbox-container label {
+  color: #333333;
+}
+
+[data-theme="light"] .tooltip {
+  background: rgba(20, 30, 40, 0.95);
+  color: #ffffff;
+}
+
+[data-theme="light"] .tooltip-title {
+  color: var(--teal);
+  border-bottom: 1px solid rgba(0, 198, 192, 0.5);
+}
+
+[data-theme="light"] .tooltip-content,
+[data-theme="light"] .tooltip-item {
+  color: #ffffff;
+}
+
+[data-theme="light"] .info-modal-title,
+[data-theme="light"] h3 {
+  color: var(--dark-teal);
+}
+
+[data-theme="light"] .info-modal-body {
+  color: #333333;
+}
+
+[data-theme="light"] .info-modal-body h4 {
+  color: var(--dark-teal);
+}
+
+[data-theme="light"] #birthdate {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #333333 !important;
+}
+
+[data-theme="light"] #country {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #333333 !important;
+}
+
+[data-theme="light"] .countdown-display span {
+  color: #fff;
+  background: linear-gradient(to bottom, #007974, #00b5b0);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .theme-toggle {
+  background: #e6f4f4;
+  border-color: rgba(0, 159, 153, 0.5);
+  box-shadow: 0 0 10px rgba(0, 198, 192, 0.2);
+}
+
+[data-theme="light"] .theme-toggle svg {
+  fill: var(--dark-teal);
+}
+
+[data-theme="light"] .theme-toggle:hover svg {
+  fill: var(--teal);
+}
+
+[data-theme="light"] .theme-toggle::after {
+    left: calc(100% - 26px);
+    background: var(--dark-teal);}
+
+[data-theme="light"] .kaspa-info {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .kaspa-info p {
+  color: #333333;
+}
+
+[data-theme="light"] button.secondary {
+  background: transparent;
+  border: 2px solid var(--dark-teal);
+  color: var(--dark-teal);
+}
+
+[data-theme="light"] button.secondary:hover {
+  background: rgba(0, 198, 192, 0.1);
+}
+
+[data-theme="light"] .success-message {
+  color: var(--dark-teal);
+}
+
+/* All theme-independent styles from original CSS file come after this line */
 
 * {
     margin: 0;
@@ -77,31 +223,62 @@ body {
     top: 20px;
     right: 20px;
     z-index: 100;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 75px;
+    height: 34px;
+    border-radius: 17px;
     background: var(--card-bg);
     border: 2px solid var(--border-color);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 5px;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 198, 192, 0.3);
+    box-shadow: 0 0 10px rgba(0, 198, 192, 0.4);
     transition: all 0.3s ease;
+    outline: none;
 }
+
 
 .theme-toggle:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(0, 198, 192, 0.5);
+    box-shadow: 0 0 12px rgba(0, 198, 192, 0.4);
 }
 
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    top: 3px;
+    left: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle::before {
+    display: none !important;
+}
+
+.theme-toggle:hover::before {
+    opacity: 1;
+}
+
+/* Style the sun and moon icons */
 .theme-toggle svg {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     fill: var(--teal);
-    transition: transform 0.5s ease;
+    z-index: 2;
+    transition: fill 0.3s ease;
 }
 
+/* Adjust the icons' color on hover */
 .theme-toggle:hover svg {
     fill: var(--bright-teal);
 }
@@ -112,15 +289,20 @@ body {
 }
 
 [data-theme="light"] .theme-toggle .sun-icon {
-    display: none;
+    fill: var(--text-primary);
 }
 
 .theme-toggle .moon-icon {
-    display: none;
+    fill: var(--text-primary);
 }
 
 .theme-toggle .sun-icon {
     display: block;
+}
+
+.theme-toggle.rotating {
+    transform: rotate(360deg);
+    transition: transform 0.5s ease;
 }
 
 .circuit-bg {
@@ -273,7 +455,8 @@ h1 {
     font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 1.5rem;
-    color: var(--text-secondary);}
+    color: var(--text-secondary);
+}
 
 /* Additional styles for separate counter boxes */
 .counter-container {
@@ -555,7 +738,7 @@ button.secondary {
 
 /* Enhanced Kaspa Info Section */
 .kaspa-info {
-	background: var(--card-bg);
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     margin-top: 4rem;
     padding: 2.5rem;
@@ -594,7 +777,7 @@ button.secondary {
 .kaspa-info p {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #eee;
+    color: var(--text-primary);
     text-align: center;
     max-width: 800px;
     margin: 0 auto;
@@ -609,7 +792,7 @@ footer {
 
 .disclaimer {
     font-size: 0.8rem;
-    color: var(--light-grey);
+    color: var(--text-muted);
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
@@ -682,7 +865,7 @@ footer {
 }
 
 .modal-content {
-	background: var(--modal-bg);
+    background: var(--modal-bg);
     border: 1px solid var(--border-color);
     border-radius: 10px;
     max-width: 700px;
@@ -727,7 +910,7 @@ footer {
 }
 
 .close-modal:hover {
-    color: white;
+    color: var(--text-primary);
     background: rgba(0, 198, 192, 0.2);
     transform: rotate(90deg);
 }
@@ -752,7 +935,7 @@ footer {
     
     .counter-container {
      grid-template-columns: repeat(2, 1fr);
-  	 gap: 2rem;
+     gap: 2rem;
     }
     
     .cta-buttons {
@@ -768,7 +951,7 @@ footer {
         font-size: 1rem;
         padding: 1rem;
     }
-
+    
     .modal-content {
         padding: 1.5rem;
         margin: 1rem;
@@ -811,7 +994,7 @@ footer {
 }
 
 .timeline-date {
-    color: var(--bright-teal);
+    color: var(--timeline-text-color);
     margin-bottom: 10px;
 }
 
@@ -819,10 +1002,11 @@ footer {
     font-size: 24px;
     font-weight: bold;
     margin: 10px 0;
+    color: var(--timeline-text-color);
 }
 
 .timeline-desc {
-    color: #ccc;
+    color: var(--text-secondary);
 }
 
 /* Make sure the timeline turns into a column on mobile */
@@ -923,14 +1107,14 @@ footer {
 
 .tooltip-close:hover {
     background-color: rgba(0, 198, 192, 0.3);
-    color: #121212;
+    color: var(--tooltip-text);
 }
 
 .tooltip-title {
     padding-right: 30px;
     position: relative;
     margin-bottom: 10px;
-    color: var(--dark-teal);
+    color: var(--teal);
     font-size: 1.2rem;
     text-align: center;
     border-bottom: 1px solid rgba(0, 198, 192, 0.3);
@@ -939,7 +1123,7 @@ footer {
 }
 
 .tooltip-content {
-     color: var(--tooltip-text);
+    color: var(--tooltip-text);
     font-size: 0.95rem;
     line-height: 1.5;
     max-width: 100%;
@@ -957,7 +1141,7 @@ footer {
 }
 
 .tooltip-item {
-     color: var(--tooltip-text);
+    color: var(--tooltip-text);
     font-size: 0.9rem;
     padding: 0.4rem;
     border-radius: 4px;
@@ -1014,7 +1198,7 @@ footer {
 .info-modal-content {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    color: #121212;
+    color: var(--modal-text-color);
     border-radius: 10px;
     max-width: 700px;
     width: 90%;
@@ -1059,7 +1243,7 @@ footer {
 }
 
 .info-modal-close:hover {
-    color: #121212;
+    color: var(--text-primary);
     background: rgba(0, 198, 192, 0.2);
     transform: rotate(90deg);
 }
@@ -1074,7 +1258,7 @@ footer {
 }
 
 .info-modal-body {
-     color: var(--tooltip-text);
+    color: var(--modal-text-color);
     font-size: 1rem;
     line-height: 1.6;
 }
@@ -1088,11 +1272,13 @@ footer {
 
 .info-modal-body p {
     margin-bottom: 1rem;
+    color: var(--modal-text-color);
 }
 
 .info-modal-body ul {
     margin-bottom: 1rem;
     padding-left: 1.5rem;
+    color: var(--modal-text-color);
 }
 
 @media (max-width: 768px) {
@@ -1114,7 +1300,7 @@ footer {
 }
 
 .counter-item:nth-child(3):hover .counter-value {
-    color: #ffffff;
+    color: var(--text-primary);
     text-shadow: 0 0 10px var(--bright-teal);
 }
 
@@ -1135,12 +1321,12 @@ footer {
 /* Countdown Styles - Fixed Version */
 /* Enhanced Countdown Section */
 .countdown-container {
-    background: rgba(0, 30, 40, 0.7);
+    background: var(--card-bg);
     border-radius: 10px;
     padding: 1.5rem;
     margin: 2rem 0;
     text-align: center;
-    border: 1px solid rgba(0, 198, 192, 0.3);
+    border: 1px solid var(--border-color);
     box-shadow: 0 0 20px rgba(0, 198, 192, 0.1);
     position: relative;
     overflow: hidden;
@@ -1192,111 +1378,17 @@ footer {
 }
 
 @keyframes pulse {
-    from {
-        box-shadow: 0 0 10px rgba(0, 198, 192, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-    to {
-        box-shadow: 0 0 20px rgba(0, 198, 192, 0.4), inset 0 0 15px rgba(0, 0, 0, 0.2);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
 }
 
 .time-separator {
-    color: var(--light-grey);
+    color: var(--text-muted);
     font-weight: 400;
     font-size: 1.4rem;
     display: inline-block;
     margin: 0 0.1rem;
-}
-
-@media (max-width: 768px) {
-    .countdown-container {
-        padding: 1rem;
-    }
-    
-    .countdown-title {
-        font-size: 1.1rem;
-    }
-    
-    .countdown-display {
-        font-size: 1.5rem;
-        gap: 0.3rem;
-    }
-    
-    .countdown-display span {
-        padding: 0.3rem 0.5rem;
-        min-width: 2.5rem;
-    }
-}
-
-
-
-/* Form sections */
-.form-section {
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.form-section:last-of-type {
-    margin-bottom: 2rem;
-}
-
-.form-section h4 {
-    margin-top: 0;
-    color: var(--teal);
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-    padding-bottom: 0.5rem;
-}
-
-/* Checkbox styling */
-.checkbox-group {
-    margin-top: 15px;
-}
-
-.checkbox-container {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: start;
-    column-gap: 10px;
-}
-
-.checkbox-container input[type="checkbox"] {
-    margin-top: 2px; /* aligns checkbox vertically with label text */
-}
-
-.checkbox-container label {
-    font-size: 0.95rem;
-    color: #ddd;
-    line-height: 1.4;
-    font-weight: normal;
-    margin: 0;
-    text-align: left;
-    word-break: normal;
-}
-
-/* Highlight for required checkbox validation */
-.highlight-required {
-    animation: pulse-border 1.5s ease;
-    border-radius: 5px;
-    padding: 8px;
-    background-color: rgba(255, 50, 50, 0.1);
-}
-
-@keyframes pulse-border {
-    0% { background-color: transparent; }
-    30% { background-color: rgba(255, 50, 50, 0.2); }
-    100% { background-color: rgba(255, 50, 50, 0.1); }
-}
-
-@keyframes blink {
-    0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
-    5% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
-    10% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
-    100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
 }
 
 @media (max-width: 768px) {
@@ -1327,6 +1419,75 @@ footer {
     }
 }
 
+/* Form sections */
+.form-section {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background: var(--modal-section-bg);
+}
+
+.form-section:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.form-section h4 {
+    margin-top: 0;
+    color: var(--teal);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    margin-top: 15px;
+}
+
+.checkbox-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-top: 2px; /* aligns checkbox vertically with label text */
+}
+
+.checkbox-container label {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 0;
+    text-align: left;
+    word-break: normal;
+}
+
+/* Highlight for required checkbox validation */
+.highlight-required {
+    animation: pulse-border 1.5s ease;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: rgba(255, 50, 50, 0.1);
+}
+
+@keyframes pulse-border {
+    0% { background-color: transparent; }
+    30% { background-color: rgba(255, 50, 50, 0.2); }
+    100% { background-color: rgba(255, 50, 50, 0.1); }
+}
+
+@keyframes blink {
+    0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
+    5% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+    10% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
+    100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); }
+}
+
 /* Unified grid layout */
 .hero-grid {
   display: grid;
@@ -1342,7 +1503,6 @@ footer {
   border-radius: 10px;
   padding: 2rem;
   text-align: center;
-  background-color: rgba(0, 198, 192, 0.1);
   box-shadow: 0 0 20px rgba(0, 198, 192, 0.1);
   transition: all 0.3s ease;
 
@@ -1352,7 +1512,6 @@ footer {
   justify-content: center;
   height: 100%;
 }
-
 
 .grid-item:hover {
   transform: translateY(-5px);
@@ -1409,10 +1568,6 @@ footer {
     padding: 0 1rem;
 }
 
-.hero-grid {
-    margin: 3rem 0; /* already set */
-}
-
 /* Info Links Navigation - NEW */
 .info-links {
     display: flex;
@@ -1423,6 +1578,9 @@ footer {
     position: relative;
     padding: 0.5rem 0;
     transition: all 0.3s ease;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 500;
 }
 
 .info-links a::after {
@@ -1458,5 +1616,138 @@ footer {
     .info-links {
         margin-top: 1rem;
     }
+}
+
+
+/* Fix 1: Make the toggle button more button-like */
+.theme-toggle {
+    /* Reset positioning */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    
+    /* Clear design */
+    width: 60px;
+    height: 30px;
+    background: rgba(0, 198, 192, 0.15);
+    border: 1px solid var(--teal);
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border-radius: 15px;
+    
+    /* Visual styling */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(0, 198, 192, 0.2);
+    overflow: hidden;
+}
+
+/* Adjust the toggle's appearance on hover */
+.theme-toggle:hover {
+    box-shadow: 0 0 15px rgba(0, 198, 192, 0.6);
+}
+
+/* Make the toggle knob glow on hover */
+.theme-toggle:hover::after {
+     box-shadow: 0 0 8px rgba(0, 198, 192, 0.5);
+}
+
+/* When the toggle is clicked, add a subtle animation */
+.theme-toggle.rotating::after {
+    animation: pulseToggle 0.4s ease;
+}
+
+@keyframes pulseToggle {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.85); }
+    100% { transform: scale(1); }
+}
+
+/* Adjust icon colors for better visibility */
+.theme-toggle .sun-icon {
+    margin-left: 3px;
+	opacity: 0.8;
+    position: relative;
+    z-index: 2;
+}
+
+.theme-toggle .moon-icon {
+    margin-right: 3px;
+	 opacity: 0.8;
+    position: relative;
+    z-index: 2;
+}
+
+/* Fix 2: Adjust heading colors for light mode */
+/* Additional fix to ensure the heading is not too bright in light mode */
+[data-theme="light"] h1 {
+    color: #007974; /* Fallback if gradient doesn't work */
+    background: linear-gradient(to right, #007974, #00AAA5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+[data-theme="light"] .logo-text {
+    color: #007974;
+    text-shadow: none;
+}
+
+[data-theme="light"] .logo-text::after {
+    color: #009e99;
+    opacity: 1;
+}
+
+/* Fix 3: Make Kaspa Blockchain text less bright in light mode */
+[data-theme="light"] .kaspa-title {
+    background: linear-gradient(to right, #007974, #00b5b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+/* Fix 4: Make Application Deadline text less bright */
+[data-theme="light"] .countdown-title {
+    color: #007974;
+    font-weight: bold;
+}
+
+/* Additional fix: Make countdown backgrounds less bright */
+[data-theme="light"] .countdown-display span {
+    background: linear-gradient(to bottom, #007974, #00b5b0);
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Fix for header menu links in light mode */
+[data-theme="light"] .info-links a {
+    color: #007974 !important; /* Darker teal */
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .info-links a:hover {
+    color: #00b5b0 !important; /* Slightly brighter on hover, but still muted */
+}
+
+[data-theme="light"] .info-links a::after {
+    background-color: #007974; /* Darker teal for the underline */
+}
+
+/* Fix headers in light mode to be more readable */
+[data-theme="light"] .kaspa-info {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .kaspa-info p {
+    color: #333;
 }
 
